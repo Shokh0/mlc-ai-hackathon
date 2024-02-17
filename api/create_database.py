@@ -10,16 +10,17 @@ def create_database():
     
         c.execute('''CREATE TABLE IF NOT EXISTS users (
                         id INTEGER PRIMARY KEY,
-                        username TEXT(50),
-                        email TEXT(100),
+                        login TEXT(150),
                         hash_password TEXT(64) NOT NULL,
                         role INTEGER CHECK (role IN (1, 0))
                     )''')
 
         c.execute('''CREATE TABLE IF NOT EXISTS topics (
                         id INTEGER PRIMARY KEY,
+                        user_id INTEGER,
                         title TEXT NOT NULL,
-                        date TEXT
+                        date TEXT,
+                        FOREIGN KEY (user_id) REFERENCES users (id)
                     )''')
 
         c.execute('''CREATE TABLE IF NOT EXISTS messages (
