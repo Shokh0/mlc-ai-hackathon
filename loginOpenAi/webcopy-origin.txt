@@ -1,0 +1,200 @@
+Uri: https://cdn.oaistatic.com/_next/static/chunks/3754-c5372f0c589e2443.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\3754-c5372f0c589e2443.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/3975-727132bb57222b04.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\3975-727132bb57222b04.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/framework-31ffa51d236da229.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\framework-31ffa51d236da229.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/main-6da2aad3a6c32aae.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\main-6da2aad3a6c32aae.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/pages/auth/login-001159e4899e6e7a.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\pages\auth\login-001159e4899e6e7a.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/pages/_app-5c61b5fdde330fed.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\pages\_app-5c61b5fdde330fed.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\polyfills-c67a75d1b6f99dc8.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/chunks/webpack-836d80a3e891b51c.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\chunks\webpack-836d80a3e891b51c.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/css/3479c143cbeebc46.css
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\css\3479c143cbeebc46.css
+Content Type: text/css
+
+Uri: https://cdn.oaistatic.com/_next/static/media/apple-touch-icon.59f2e898.png
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\apple-touch-icon.59f2e898.png
+Content Type: image/png
+
+Uri: https://cdn.oaistatic.com/_next/static/media/favicon-16x16.9b8dbb69.png
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\favicon-16x16.9b8dbb69.png
+Content Type: image/png
+
+Uri: https://cdn.oaistatic.com/_next/static/media/favicon-32x32.be48395e.png
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\favicon-32x32.be48395e.png
+Content Type: image/png
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_AMS-Regular.a79f1c31.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_AMS-Regular.a79f1c31.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Caligraphic-Bold.ec17d132.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Caligraphic-Bold.ec17d132.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Caligraphic-Regular.55fac258.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Caligraphic-Regular.55fac258.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Fraktur-Bold.d42a5579.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Fraktur-Bold.d42a5579.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Fraktur-Regular.d3c882a6.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Fraktur-Regular.d3c882a6.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Main-Bold.c3fb5ac2.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Main-Bold.c3fb5ac2.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Main-BoldItalic.6f2bb1df.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Main-BoldItalic.6f2bb1df.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Main-Italic.8916142b.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Main-Italic.8916142b.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Main-Regular.0462f03b.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Main-Regular.0462f03b.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Math-BoldItalic.572d331f.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Math-BoldItalic.572d331f.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Math-Italic.f28c23ac.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Math-Italic.f28c23ac.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_SansSerif-Bold.8c5b5494.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_SansSerif-Bold.8c5b5494.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_SansSerif-Italic.3b1e59b3.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_SansSerif-Italic.3b1e59b3.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_SansSerif-Regular.ba21ed5f.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_SansSerif-Regular.ba21ed5f.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Script-Regular.03e9641d.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Script-Regular.03e9641d.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Size1-Regular.eae34984.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Size1-Regular.eae34984.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Size2-Regular.5916a24f.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Size2-Regular.5916a24f.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Size3-Regular.b4230e7e.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Size3-Regular.b4230e7e.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Size4-Regular.10d95fd3.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Size4-Regular.10d95fd3.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/KaTeX_Typewriter-Regular.a8709e36.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\KaTeX_Typewriter-Regular.a8709e36.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/signifier-bold-italic.52d511e3.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\signifier-bold-italic.52d511e3.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/signifier-bold.3a11015f.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\signifier-bold.3a11015f.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/signifier-light-italic.ae129369.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\signifier-light-italic.ae129369.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/signifier-light.c131ea48.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\signifier-light.c131ea48.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-buch-kursiv.1052965d.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-buch-kursiv.1052965d.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-buch.13189857.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-buch.13189857.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-circle-buch.d446e5e9.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-circle-buch.d446e5e9.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-circle-halbfett.9eb377ad.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-circle-halbfett.9eb377ad.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-halbfett-kursiv.cb37a814.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-halbfett-kursiv.cb37a814.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-halbfett.977f1845.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-halbfett.977f1845.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-kraftig-kursiv.a0040f3f.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-kraftig-kursiv.a0040f3f.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-kraftig.204b461c.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-kraftig.204b461c.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-mono-buch-kursiv.8eeb89d0.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-mono-buch-kursiv.8eeb89d0.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-mono-buch.de677af1.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-mono-buch.de677af1.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/media/soehne-mono-halbfett.b082e8e2.woff2
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\media\soehne-mono-halbfett.b082e8e2.woff2
+Content Type: font/woff2
+
+Uri: https://cdn.oaistatic.com/_next/static/P9LodNv0xkZ1kyW4nyx7S/_buildManifest.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\P9LodNv0xkZ1kyW4nyx7S\_buildManifest.js
+Content Type: application/javascript
+
+Uri: https://cdn.oaistatic.com/_next/static/P9LodNv0xkZ1kyW4nyx7S/_ssgManifest.js
+File Name: C:\Downloaded Web Sites\chat.openai.com\_next\static\P9LodNv0xkZ1kyW4nyx7S\_ssgManifest.js
+Content Type: application/javascript
+
+Uri: https://chat.openai.com/auth/login
+File Name: C:\Downloaded Web Sites\chat.openai.com\auth\login.html
+Content Type: text/html
+

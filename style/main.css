@@ -1,0 +1,70 @@
+
+.background {
+    position: absolute;
+    width: 100%;
+}
+
+.main-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcomeWindowTopText {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 16vw;
+}
+
+.welcomeWindowBottomText {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    top: 22vw;
+}
+
+
+.getLogButton {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	width: 18vw;
+    top: 26vw;
+    transition: color, transform 500ms ease;
+}   
+
+.getLogButton:hover {
+    transform: scale(1.05);
+}
+
+.authorizationFrom {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 34vw;
+    top: 5.5vw;
+}
+
+.auth-form {
+
+}
+
+.authorizationButton {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	width: 27vw;
+    top: -11.5vw;
+    transition: color, transform 500ms ease;
+}   
+
+.authorizationButton:hover {
+    transform: scale(1.05);
+}
+
