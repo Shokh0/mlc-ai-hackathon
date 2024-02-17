@@ -11,8 +11,6 @@ class DataBase(Singleton):
 
     
     def addUser(self, login, hash_password: str, role: int[1 | 0]):
-        if username is None: username = 'None'
-        else: email = 'None'
         with sqlite3.connect(self.db_path) as c:
             c.execute('INSERT INTO users (login, hash_password, role) VALUES (?, ?, ?, ?)', (login, hash_password, role))
             c.commit()
