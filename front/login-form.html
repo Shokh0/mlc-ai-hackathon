@@ -20,12 +20,12 @@
             <input id="input-password" class="authorizationFrom-input-password" type="text">
             <script>
                 const searchInputLogin = document.getElementById('input-login');
-                const searchResultsPassword = document.getElementById('nput-password');
-                const searchYuthorizationButtonImg = document.getElementById('authorizationButton-img')
+                const searchResultsPassword = document.getElementById('input-password');
+                const searchYuthorizationButtonImg = document.getElementById('authorizationButton-img');
             
                 searchYuthorizationButtonImg.addEventListener('click', function() {
                     // Ваш код для выполнения действия при нажатии на изображение
-                    alert('Вы нажали на изображение!');
+                    alert(`${searchInputLogin.value.trim()} ${searchResultsPassword.value.trim()}`);
                 });
 
                 function getData() {
