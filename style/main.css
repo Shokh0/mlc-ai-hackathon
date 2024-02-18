@@ -1,7 +1,17 @@
 
-.background {
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.base-window-container {
     position: absolute;
+    display: flex;
     width: 100%;
+    height: 100%;
+    background-image: url('../media/svg/background.svg');
+    background-position: center;
 }
 
 .main-container {
@@ -11,11 +21,12 @@
 }
 
 .welcomeWindowTopText {
-    position: relative;
+    position: absolute;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    top: 16vw;
+    top: 1vw;
+    width: 30vw;
 }
 
 .welcomeWindowBottomText {
@@ -24,6 +35,7 @@
     margin-left: auto;
     margin-right: auto;
     top: 22vw;
+    width: 50vw;
 }
 
 
@@ -50,10 +62,6 @@
     top: 5.5vw;
 }
 
-.auth-form {
-
-}
-
 .authorizationButton {
     position: relative;
     display: block;
@@ -68,3 +76,116 @@
     transform: scale(1.05);
 }
 
+
+.left-bar {
+    position: static;
+    flex: 1;
+    /* display: block; */
+    border-style: solid;
+    bottom: 0px;
+    top: 0px;
+    width: 30%;
+    /* border-color: white;
+    border-width: 1px; */
+}
+
+.gradient-topic-bar {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgb(186, 186, 186), black);
+    opacity: 0.2;
+}
+
+.chat-header-logo {
+    position: absolute;
+    top: 1vw;
+    left: 2vw;
+    width: 2.5vw;
+    background-size: cover;
+}
+
+.chat-header-logo-text {
+    position: absolute;
+    top: 1.2vw;
+    left: 6vw;
+    background-size: cover;
+}
+
+.chat-header-writeicon {
+    position: absolute;
+    width: 1.5vw;
+    top: 1.2vw;
+    left: 25vw;
+    background-size: cover;
+}
+
+
+.chat-space {
+    position: static ;
+    display: inline-block;
+    flex: 2;
+    border-style: solid;
+    bottom: 0px;
+    top: 0px;
+    left: 1px;
+    width: 70%;
+    /* border-color: blue;
+    border-width: 1px; */
+    /* width: 30%; */
+}
+
+.chat-header-edu-chat {
+    position: relative;
+    width: 7vw;
+    top: -1.4vw;
+    left: 4vw;
+    /* background-size: cover; */
+}
+
+
+.chat-header-welcome-text {
+    position: relative;
+    display: inline-block;
+    left: 13vw;
+    top: 20%;
+    width: 26vw;
+    /* background-size: cover; */
+}
+
+.chat-footer-input-text {
+    position: absolute;
+    display: inline-block;
+    left: 51vw;
+    bottom: 3vw;
+}
+
+.input-chat-ai-container {
+    position: absolute;
+    border-style: solid;
+    border-radius: 16px;
+    border-width: .5px;
+    width: 500px;
+    height: 50px;
+    background-color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    right: 16.6vw;
+    bottom: 2vw;
+    /* width: 26vw; */
+}
+
+.input-chat-ai-text {
+    position: absolute;
+    left: 2vw;
+    top: .95vw;
+    border-style: none;
+}
+
+.input-chat-ai-icon {
+    position: absolute;
+    right: 1vw;
+    top: .8vw;
+    width: 26px;
+    /* bottom: 3vw; */
+}
