@@ -56,8 +56,7 @@ class DataBase(Singleton):
 
     def getMessagesFromTopicId(self, topic_id: int): 
         with sqlite3.connect(self.db_path) as c:
-            c.execute('SELECT * FROM messages WHERE topic_id = ?' (topic_id,)).fetchall()
-            c.commit()
-
+            messages = c.execute('SELECT * FROM messages WHERE topic_id = ?' (topic_id,)).fetchall()
+            return messages
 
 

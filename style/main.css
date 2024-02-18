@@ -12,6 +12,7 @@ html, body {
     height: 100%;
     background-image: url('../media/svg/background.svg');
     background-position: center;
+
 }
 
 .main-container {
@@ -20,32 +21,36 @@ html, body {
     margin-right: auto;
 }
 
+.welcome-page-container {
+    width: 100%; /* Ширина контейнера */
+    height: 100vh; /* Высота контейнера (на всю высоту окна) */
+    display: flex;
+    justify-content: center; /* Горизонтальное выравнивание по центру */
+    align-items: center;
+}
+
 .welcomeWindowTopText {
     position: absolute;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    top: 1vw;
+    margin: auto;
+    top: 14vw;
     width: 30vw;
 }
 
 .welcomeWindowBottomText {
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    margin: auto;
     top: 22vw;
     width: 50vw;
 }
 
+.welcome-page-container>a{
+    position: absolute;
+    top: 28vw;
+    margin: auto;
+}
 
 .getLogButton {
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-	width: 18vw;
-    top: 26vw;
+	width: 19vw;
     transition: color, transform 500ms ease;
 }   
 
@@ -53,24 +58,51 @@ html, body {
     transform: scale(1.05);
 }
 
+.auth-form-container {
+    display: flex;
+
+}
+
+.auth-form-container {
+    width: 100%; /* Ширина контейнера */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .authorizationFrom {
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    margin: auto;
     width: 34vw;
     top: 5.5vw;
 }
 
 .authorizationButton {
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    margin: auto;
 	width: 27vw;
-    top: -11.5vw;
+    top: 26.5vw;
     transition: color, transform 500ms ease;
 }   
+
+.authorizationFrom-input-login {
+    position: absolute;
+    top: 20.1vw;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    width: 12vw;
+}
+
+.authorizationFrom-input-password {
+    position: absolute;
+    top: 26vw;
+    left: 46vw;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+    width: 12vw;
+}
 
 .authorizationButton:hover {
     transform: scale(1.05);
