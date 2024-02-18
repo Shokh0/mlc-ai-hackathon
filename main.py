@@ -55,7 +55,7 @@ async def singupApi(items: SingupRequestDTO) -> JSONResponse:
     hash_password = hashPassword(password)
     db.addUser(login, hash_password, teacher_student_flag)
     status: bool = True
-    return JSONResponse({'status': status, 'message': 'Пользователь добавлен'})
+    return RedirectResponse('https://c876-86-62-2-178.ngrok-free.app/front/ai-chat.html')
 
 @app.post('/api/login')
 async def loginApi(items: LoginRequestDTO) -> JSONResponse:
