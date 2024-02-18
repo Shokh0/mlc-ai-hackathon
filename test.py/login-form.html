@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style\reset.css">
+    <link rel="stylesheet" href="style\main.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="base-window-container">
+        <!-- <img class="background" src="media\svg\background.svg" alt="welcome image"> -->
+        
+        <div class="auth-form-container">
+            <img class="authorizationFrom" src="media\svg\authorization\auth.svg" alt="welcome image">
+            <img class="authorizationButton" src="media\svg\authorization\authButton.svg" alt="auth button" id="authorizationButton-img">
+            <input id="input-login" class="authorizationFrom-input-login" type="text">
+            <input id="input-password" class="authorizationFrom-input-password" type="text">
+            <script>
+                const searchInputLogin = document.getElementById('input-login');
+                const searchResultsPassword = document.getElementById('nput-password');
+                const searchYuthorizationButtonImg = document.getElementById('authorizationButton-img')
+            
+                searchYuthorizationButtonImg.addEventListener('click', function() {
+                    // Ваш код для выполнения действия при нажатии на изображение
+                    alert('Вы нажали на изображение!');
+                });
+
+                function getData() {
+                    const inputLogin = searchInputLogin.value.trim();
+                    const inputPassword = searchResultsPassword.value.trim();
+            
+                    // URL адрес вашего API
+                    const apiUrl = 'http://127.0.0.1:8000/api/login';
+
+                    const headers = {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    };
+
+                    const data = {
+                        'login': inputLogin,
+                        'password': inputPassword,
+                    };
+
+                    // Выполнение GET-запроса с помощью Axios
+                    axios.get(apiUrl)
+                        .then(function (response) {
+                            // Обработка успешного ответа
+                            console.log(response.data);
+                            alert(response.data)
+                            document.getElementById('result').innerText = JSON.stringify(response.data);
+                        })
+                        .catch(function (error) {
+                            // Обработка ошибки
+                            console.error('Error:', error);
+                        });
+                };
+            </script>
+        </div>
+    </div>
+
+</body>
+</html>
