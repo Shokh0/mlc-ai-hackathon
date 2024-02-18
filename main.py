@@ -62,7 +62,7 @@ async def loginApi(items: LoginRequestDTO) -> JSONResponse:
     login: str = items.login
     password: str = items.password
     all_logins = db.getAllUsersLogin()
-    if login in all_logins:
+    if login not in all_logins:
         status: bool = False
         return JSONResponse({'status': status, 'message': 'Пользователя с таким логином нет'})
     new_hash_password = hashPassword(password)
@@ -73,7 +73,8 @@ async def loginApi(items: LoginRequestDTO) -> JSONResponse:
             return JSONResponse({'status': status, 'message': 'Пароль не верный'})
         
         status: bool = True
-        return JSONResponse({'status': status, 'message': 'Верификация пройдена'})
+        return RedirectResponse('https://c876-86-62-2-178.ngrok-free.app/front/ai-chat.html')
+        # return JSONResponse({'status': status, 'message': 'Верификация пройдена'})
     status: bool = False
     return JSONResponse({'status': status, 'message': 'Что-то пошло не так'})
 
