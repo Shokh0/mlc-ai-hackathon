@@ -12,7 +12,7 @@ class DataBase(Singleton):
     # users
     def addUser(self, login, hash_password: str, role: int):
         with sqlite3.connect(self.db_path) as c:
-            c.execute('INSERT INTO users (login, hash_password, role) VALUES (?, ?, ?, ?)', (login, hash_password, role))
+            c.execute('INSERT INTO users (login, hash_password, role) VALUES (?, ?, ?)', (login, hash_password, role))
             c.commit()
             print(f'[INFO] new user "{login}" has been added')
     
@@ -24,7 +24,7 @@ class DataBase(Singleton):
     def getPasswordFromLogin(self, login: str):
         with sqlite3.connect(self.db_path) as c:
             hash_password = c.execute('SELECT hash_password FROM users WHERE login = ?', (login,)).fetchone()
-            return hash_password[0]
+            return hash_password
 
     def getAllUsersLogin(self):
         with sqlite3.connect(self.db_path) as c:

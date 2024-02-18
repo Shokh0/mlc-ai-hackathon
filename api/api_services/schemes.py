@@ -11,7 +11,7 @@ class UsersDataBase(BaseModel):
 class TopicsDataBase(BaseModel):
     user_id: str = Field(..., description='user id')
     title: str = Field(..., description='title of the topic')
-    date: str = Field(..., description='date of the topic')
+    # date: str = Field(..., description='date of the topic')
 
 class MessagesDataBase(BaseModel):
     topic_id: int = Field(..., description='id of the topic')
@@ -26,6 +26,9 @@ class SingupRequestDTO(BaseModel):
     password: str = Field(..., description='user\'s password without hash')
     teacher_student_flag: int = Field(..., description='teacher or student flag')
 
+class LaminiRequest(BaseModel):
+    question: str = Field(..., description='question for lamini model')
+    
 class LoginResponseDTO(BaseModel):
     response: bool = Field(..., description='give access or not')
 
