@@ -55,10 +55,11 @@ async def singupApi(items: SingupRequestDTO) -> JSONResponse:
     hash_password = hashPassword(password)
     db.addUser(login, hash_password, teacher_student_flag)
     status: bool = True
-    return RedirectResponse('https://c876-86-62-2-178.ngrok-free.app/front/ai-chat.html')
+    return RedirectResponse('https://5bdc-86-62-2-178.ngrok-free.app/mlc-ai-hackathon/front/ai-chat.html')
 
 @app.post('/api/login')
 async def loginApi(items: LoginRequestDTO) -> JSONResponse:
+    print('da')
     login: str = items.login
     password: str = items.password
     all_logins = db.getAllUsersLogin()
@@ -73,7 +74,7 @@ async def loginApi(items: LoginRequestDTO) -> JSONResponse:
             return JSONResponse({'status': status, 'message': 'Пароль не верный'})
         
         status: bool = True
-        return RedirectResponse('https://c876-86-62-2-178.ngrok-free.app/front/ai-chat.html')
+        return RedirectResponse('https://5bdc-86-62-2-178.ngrok-free.app/mlc-ai-hackathon/front/ai-chat.html')
         # return JSONResponse({'status': status, 'message': 'Верификация пройдена'})
     status: bool = False
     return JSONResponse({'status': status, 'message': 'Что-то пошло не так'})
