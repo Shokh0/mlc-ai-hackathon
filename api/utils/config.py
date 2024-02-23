@@ -1,1 +1,1 @@
-DATABASE_PATH = "api/db.sqlite3"
+DATABASE_PATH = "./api/db.sqlite3"
