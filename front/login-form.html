@@ -18,49 +18,9 @@
             <img class="authorizationButton" src="media\svg\authorization\authButton.svg" alt="auth button" id="authorizationButton-img">
             <input id="input-login" class="authorizationFrom-input-login" type="text">
             <input id="input-password" class="authorizationFrom-input-password" type="text">
-            <script>
-                const searchInputLogin = document.getElementById('input-login');
-                const searchResultsPassword = document.getElementById('input-password');
-                const searchYuthorizationButtonImg = document.getElementById('authorizationButton-img');
             
-                searchYuthorizationButtonImg.addEventListener('click', function() {
-                    // Ваш код для выполнения действия при нажатии на изображение
-                    alert(`${searchInputLogin.value.trim()} ${searchResultsPassword.value.trim()}`);
-                });
-
-                function getData() {
-                    const inputLogin = searchInputLogin.value.trim();
-                    const inputPassword = searchResultsPassword.value.trim();
-            
-                    // URL адрес вашего API
-                    const apiUrl = 'https://0d47-86-62-2-178.ngrok-free.app/api/login';
-
-                    const headers = {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    };
-
-                    const data = {
-                        'login': inputLogin,
-                        'password': inputPassword,
-                    };
-
-                    // Выполнение GET-запроса с помощью Axios
-                    axios.get(apiUrl)
-                        .then(function (response) {
-                            // Обработка успешного ответа
-                            console.log(response.data);
-                            alert(response.data)
-                            document.getElementById('result').innerText = JSON.stringify(response.data);
-                        })
-                        .catch(function (error) {
-                            // Обработка ошибки
-                            console.error('Error:', error);
-                        });
-                };
-            </script>
         </div>
-    </div>
-
+    </div>  
+    <script src="script/login.js"></script>
 </body>
 </html>
