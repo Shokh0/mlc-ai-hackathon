@@ -1,1 +1,0 @@
-DATABASE_PATH = "api/db.sqlite3"
