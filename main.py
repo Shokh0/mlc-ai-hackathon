@@ -1,25 +1,35 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Union
 from starlette.responses import JSONResponse
 from api.api_services.schemes import *
 from api.database_handler import *
 from api.utils.usefull_func import hashPassword
-from inference.model_wrapper import AiAssistant
+# from inference.model_wrapper import AiAssistant
 import copy
 
 """This module includes main method for working with AI assistant model."""
 
 
-ai_assitant = AiAssistant()
-chat = ai_assitant.create_chat()
+# ai_assitant = AiAssistant()
+# chat = ai_assitant.create_chat()
 
 app = FastAPI(
     title="Inference API for Lamini-77M",
     description="A simple API that use MBZUAI/LaMini-Flan-T5-77M as a chatbot",
     version="1.0",
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
 db = DataBase()
 
 @app.get("/")
@@ -34,15 +44,15 @@ async def readDocsApi() -> RedirectResponse:
 async def readRedocApi() -> RedirectResponse: 
     return RedirectResponse(f"/redoc")
 
-@app.post('/lamini')
-async def lamini(question : LaminiRequest):
-    res = chat.run(question)
-    result = copy.deepcopy(res)
-    status = True
-    return JSONResponse({'status': status, 'message': result})
+# @app.post('/lamini')
+# async def lamini(question : LaminiRequest):
+#     res = chat.run(question)
+#     result = copy.deepcopy(res)
+#     status = True
+#     return JSONResponse({'status': status, 'message': result})
 
 @app.post('/api/singup')
-async def singupApi(items: SingupRequestDTO) -> JSONResponse:
+async def singup(items: SingupRequestDTO) -> JSONResponse:
     login: str = items.login
     password: str = items.password
     teacher_student_flag: int = items.teacher_student_flag
@@ -55,32 +65,35 @@ async def singupApi(items: SingupRequestDTO) -> JSONResponse:
     hash_password = hashPassword(password)
     db.addUser(login, hash_password, teacher_student_flag)
     status: bool = True
-    return RedirectResponse('https://5bdc-86-62-2-178.ngrok-free.app/mlc-ai-hackathon/front/ai-chat.html')
+    # return JSONResponse({'status': status, 'message': 'Пользователь добавлен'})
+    return JSONResponse({'status': status, 'message': 'http://127.0.0.1:5500/front/ai-chat.html'})
 
 @app.post('/api/login')
-async def loginApi(items: LoginRequestDTO) -> JSONResponse:
-    print('da')
+async def login(items: LoginRequestDTO) -> JSONResponse:
+    print('login')
     login: str = items.login
     password: str = items.password
     all_logins = db.getAllUsersLogin()
+    if all_logins != None:
+        all_logins = list(map(lambda x: x[0], all_logins))
+
     if login not in all_logins:
         status: bool = False
         return JSONResponse({'status': status, 'message': 'Пользователя с таким логином нет'})
     new_hash_password = hashPassword(password)
     curent_hash_password = db.getPasswordFromLogin(login)
+    
     if curent_hash_password != None:
         if new_hash_password != curent_hash_password[0]: 
             status: bool = False
             return JSONResponse({'status': status, 'message': 'Пароль не верный'})
-        
         status: bool = True
-        return RedirectResponse('https://5bdc-86-62-2-178.ngrok-free.app/mlc-ai-hackathon/front/ai-chat.html')
-        # return JSONResponse({'status': status, 'message': 'Верификация пройдена'})
+        return JSONResponse({'status': status, 'message': 'http://127.0.0.1:5500/front/ai-chat.html', 'login': login})
     status: bool = False
     return JSONResponse({'status': status, 'message': 'Что-то пошло не так'})
 
 @app.post('/api/addMessage')
-async def addMessageApi(items: MessagesDataBase) -> JSONResponse:
+async def addMessage(items: MessagesDataBase) -> JSONResponse:
     topic_id = items.topic_id
     content = items.content
     db.addMessage(topic_id, content)
@@ -88,13 +101,21 @@ async def addMessageApi(items: MessagesDataBase) -> JSONResponse:
     return JSONResponse({'status': status, 'message': 'Сообщение добавлено'})
 
 @app.post('/api/addTopic')
-async def addTopicApi(items: TopicsDataBase) -> JSONResponse:
+async def addTopic(items: TopicsDataBase) -> JSONResponse:
     user_id = items.user_id
     title = items.title
     date = datetime.now().strftime('%d.%m.%Y %H:%M')
     db.addTopic(user_id, title, date)
     status: bool = True
     return JSONResponse({'status': status, 'message': 'Тема добавлена'})
+
+
+@app.post('/api/getTopics')
+async def getTopics(items: GetTopicsDataBase) -> JSONResponse:
+    login = items.login
+    topics = ['topic 1', 'topic 2', 'topic 3', 'topic 4', 'topic 5', 'topic 6']
+    status: bool = True
+    return JSONResponse({'status': status, 'topics': topics})
 
 
 # @app.get("/items/{item_id}")

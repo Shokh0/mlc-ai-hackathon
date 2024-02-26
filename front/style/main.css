@@ -15,11 +15,11 @@ html, body {
 
 }
 
-.main-container {
+/* .main-container {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .welcome-page-container {
     width: 100%; /* Ширина контейнера */
@@ -93,6 +93,7 @@ html, body {
     background-color: rgba(255, 255, 255, 0);
     border-style: none;
     width: 12vw;
+    opacity: 0;
 }
 
 .authorizationFrom-input-password {
@@ -102,122 +103,158 @@ html, body {
     background-color: rgba(255, 255, 255, 0);
     border-style: none;
     width: 12vw;
+    opacity: 0;
 }
 
 .authorizationButton:hover {
     transform: scale(1.05);
 }
 
-
 .left-bar {
     position: static;
     flex: 1;
-    /* display: block; */
     border-style: solid;
     bottom: 0px;
     top: 0px;
-    width: 30%;
-    /* border-color: white;
-    border-width: 1px; */
+    /* border-right-width: 1px;  */
+    background: rgba(9, 9, 9, 0.12);
+    /* opacity: 0.2; */
 }
 
-.gradient-topic-bar {
+.chat-topics-bar-list {
     position: relative;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to bottom, rgb(186, 186, 186), black);
-    opacity: 0.2;
+    width: 86%;
+    margin: auto;
+    margin-top: 6vw;
+    background-size: cover;    
+}
+
+.chat-topics-bar-list>p {
+    /* position: absolute;
+    text-decoration: none; */
+    font-size: 1.4vw;
+    margin-top: 1.5vw;
+    margin-bottom: 1.5vw;
+    background-size: cover;
+}
+
+.chat-header-logo-container {
+    position: absolute;
+    top: 1vw;
+    left: 1vw;
+    width: 14vw;
+    /* background-color: aqua; */
+    background-size: cover;
 }
 
 .chat-header-logo {
-    position: absolute;
-    top: 1vw;
-    left: 2vw;
-    width: 2.5vw;
+    position: relative;
+    width: 2.4vw;
     background-size: cover;
 }
 
 .chat-header-logo-text {
-    position: absolute;
-    top: 1.2vw;
-    left: 6vw;
+    position: relative;
+    width: 5vw;
+    margin-left: .8vw;
     background-size: cover;
 }
 
 .chat-header-writeicon {
     position: absolute;
-    width: 1.5vw;
-    top: 1.2vw;
-    left: 25vw;
+    width: 1vw;
+    right: 1px;
+    margin-top: .5vw;
     background-size: cover;
 }
 
 
 .chat-space {
-    position: static ;
-    display: inline-block;
-    flex: 2;
+    position: relative ;
+    display: flex;
+    flex: 4.9;
+    /* width: 80%; */
+    align-items: center;
+    justify-content: center;
     border-style: solid;
-    bottom: 0px;
-    top: 0px;
-    left: 1px;
-    width: 70%;
-    /* border-color: blue;
-    border-width: 1px; */
-    /* width: 30%; */
 }
 
 .chat-header-edu-chat {
-    position: relative;
+    position: absolute;
     width: 7vw;
-    top: -1.4vw;
-    left: 4vw;
+    top: 2%;
+    left: 2%
     /* background-size: cover; */
 }
 
 
 .chat-header-welcome-text {
-    position: relative;
-    display: inline-block;
-    left: 13vw;
-    top: 20%;
+    position: absolute;
+    top: 35%;
     width: 26vw;
-    /* background-size: cover; */
 }
 
-.chat-footer-input-text {
+.chat-help-blocks-container {
     position: absolute;
-    display: inline-block;
-    left: 51vw;
-    bottom: 3vw;
+    display: flex;
+    bottom: 15%
+    /* grid-row: 2; */
 }
+
+.chat-help-blocks-container-column {
+    flex: 1;
+}
+
+.chat-help-blocks-container-column>p {
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 20px;
+    /* border-width: 1px; */
+    border-color: black;
+    margin: 20px;
+    margin-inline: 20px;
+    padding: 20px;
+    width: 330px;
+    text-align: center;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(145, 145, 145, 0.2));
+}
+
 
 .input-chat-ai-container {
     position: absolute;
+    display: inline-block;
+    bottom: 5%;
     border-style: solid;
     border-radius: 16px;
     border-width: .5px;
-    width: 500px;
-    height: 50px;
+    width: 65%;
+    min-height: 50px;
+    /* max-height: 400px; */
     background-color: white;
     text-decoration: none;
+    overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    right: 16.6vw;
-    bottom: 2vw;
-    /* width: 26vw; */
 }
 
 .input-chat-ai-text {
     position: absolute;
-    left: 2vw;
-    top: .95vw;
-    border-style: none;
+    bottom: 16px;
+    left: 4%;
+    width: 85%;
+    max-width: 100%;
+    height: 20px;
+    min-height: 20px;
+    resize: none;
+    border: none;
+    box-sizing: border-box; /* учитывать границы и отступы внутри textarea */
+    background-color: rgb(0, 0, 0, 0);
 }
 
 .input-chat-ai-icon {
     position: absolute;
     right: 1vw;
-    top: .8vw;
     width: 26px;
-    /* bottom: 3vw; */
+    bottom: 6%;
+    transform: translate(-50%, -50%);
 }
