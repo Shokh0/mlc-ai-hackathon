@@ -9,6 +9,7 @@ from api.database_handler import *
 from api.utils.usefull_func import hashPassword
 # from inference.model_wrapper import AiAssistant
 import copy
+import sqlite3
 
 """This module includes main method for working with AI assistant model."""
 
@@ -112,8 +113,12 @@ async def addTopic(items: TopicsDataBase) -> JSONResponse:
 
 @app.post('/api/getTopics')
 async def getTopics(items: GetTopicsDataBase) -> JSONResponse:
-    login = items.login
-    topics = ['topic 1', 'topic 2', 'topic 3', 'topic 4', 'topic 5', 'topic 6']
+    login_id = items.login_id
+    print(login_id)
+    with sqlite3.connect('api/db.sqlite3') as c:
+        topics = c.execute(f"""SELECT * FROM topics WHERE user_id = '{login_id}'""").fetchall()
+    print(topics)
+    # topics = ['topic 1', 'topic 2', 'topic 3', 'topic 4', 'topic 5', 'topic 6']
     status: bool = True
     return JSONResponse({'status': status, 'topics': topics})
 

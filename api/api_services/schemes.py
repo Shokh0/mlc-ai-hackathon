@@ -14,7 +14,7 @@ class TopicsDataBase(BaseModel):
     # date: str = Field(..., description='date of the topic')
 
 class GetTopicsDataBase(BaseModel):
-    login: str = Field(..., description='login')
+    login_id: int = Field(..., description='login id')
 
 class MessagesDataBase(BaseModel):
     topic_id: int = Field(..., description='id of the topic')

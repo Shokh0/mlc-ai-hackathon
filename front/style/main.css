@@ -130,13 +130,35 @@ html, body {
 }
 
 .chat-topics-bar-list>p {
-    /* position: absolute;
-    text-decoration: none; */
+    /* position: absolute;*/
+    text-decoration: none; 
     font-size: 1.4vw;
-    margin-top: 1.5vw;
-    margin-bottom: 1.5vw;
-    background-size: cover;
+    padding-top: .5vw;
+    padding-bottom: .5vw;
+    padding-left: .4vw;
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-align: left;
+    /* transition: transform 0.5s ease; */
+    border-style: solid;
+    border-color: black;
+    border-radius: 6px;
+    color: black; 
 }
+.chat-topics-bar-list>p>a {
+    text-decoration: none; 
+    font-size: 1.4vw;
+    text-align: left;;
+    color: black;
+}
+
+.chat-topics-bar-list>p:hover {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
+    /* transition-delay: 1s; */
+}
+
 
 .chat-header-logo-container {
     position: absolute;
@@ -182,7 +204,7 @@ html, body {
 .chat-header-edu-chat {
     position: absolute;
     width: 7vw;
-    top: 2%;
+    top: 2.5%;
     left: 2%
     /* background-size: cover; */
 }
