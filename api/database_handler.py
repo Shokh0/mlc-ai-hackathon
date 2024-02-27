@@ -41,22 +41,28 @@ class DataBase(Singleton):
     # Assistant
     def addTopic(self, user_id: int, title: str, date: str): 
         with sqlite3.connect(self.db_path) as c:
-            c.execute('INSERT INTO topics (user_id, title, date) VALUES (?, ?, ?)', (user_id, title, date))
+            cursor = c.cursor()
+            cursor.execute('INSERT INTO topics (user_id, title, date) VALUES (?, ?, ?)', (user_id, title, date)).fetchone()
+            last_row_id = cursor.lastrowid
             c.commit()
-        
+            print("ID последней вставленной строки:", last_row_id)
+            row = c.execute(f"""SELECT * FROM topics WHERE id = '{last_row_id}'""").fetchone()
+            return row
+            
     def getTopicsFromUserId(self, user_id: str): 
         with sqlite3.connect(self.db_path) as c:
             topics = c.execute('SELECT * FROM topics WHERE user_id = ?', (user_id,)).fetchall()
             return topics
 
-    def addMessage(self, topic_id: int, content: str): 
+    def addMessage(self, topic_id: int, user_id: int, content: str, is_ai: int): 
         with sqlite3.connect(self.db_path) as c:
-            c.execute('INSERT INTO messages (topic_id, content) VALUES (?, ?)', (topic_id, content))
+            c.execute('INSERT INTO messages (topic_id, user_id, content, is_ai) VALUES (?, ?, ?, ?)', (topic_id, user_id, content, is_ai))
             c.commit()
 
-    def getMessagesFromTopicId(self, topic_id: int): 
+    def getMessagesFromTopicIdAndUserId(self, topic_id: int, user_id: int): 
         with sqlite3.connect(self.db_path) as c:
-            messages = c.execute('SELECT * FROM messages WHERE topic_id = ?' (topic_id,)).fetchall()
+            messages = c.execute('SELECT * FROM messages WHERE topic_id = ? AND user_id = ?', (topic_id, user_id)).fetchall()
+            print(messages)
             return messages
 
 

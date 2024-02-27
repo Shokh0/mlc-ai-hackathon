@@ -93,7 +93,6 @@ html, body {
     background-color: rgba(255, 255, 255, 0);
     border-style: none;
     width: 12vw;
-    opacity: 0;
 }
 
 .authorizationFrom-input-password {
@@ -103,7 +102,6 @@ html, body {
     background-color: rgba(255, 255, 255, 0);
     border-style: none;
     width: 12vw;
-    opacity: 0;
 }
 
 .authorizationButton:hover {
@@ -127,19 +125,44 @@ html, body {
     margin: auto;
     margin-top: 6vw;
     background-size: cover;    
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 600px;
+}
+
+/* Общие стили для полосы прокрутки */
+.chat-topics-bar-list::-webkit-scrollbar {
+    width: 6px; /* Ширина полосы прокрутки */
+}
+
+/* Стили для фона полосы прокрутки */
+.chat-topics-bar-list::-webkit-scrollbar-track {
+    background-color: rgba(203, 203, 203, 0); /* Цвет фона полосы прокрутки */ 
+}
+
+/* Стили для "бегунка" (ползунка) полосы прокрутки */
+.chat-topics-bar-list::-webkit-scrollbar-thumb {
+    background-color: #4b4b4b; /* Цвет ползунка */
+    border-radius: 12px; /* Скругление углов ползунка */
+}
+
+/* При наведении на полосу прокрутки */
+.chat-topics-bar-list::-webkit-scrollbar-thumb:hover {
+    background-color: #848484; /* Измененный цвет ползунка при наведении */
 }
 
 .chat-topics-bar-list>p {
     /* position: absolute;*/
     text-decoration: none; 
-    font-size: 1.4vw;
+    font-size: calc(calc(1vw + 1vh) * 1.1);
     padding-top: .5vw;
     padding-bottom: .5vw;
     padding-left: .4vw;
-    width: 100%;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    width: 94%;
+    margin-top: 16px;
+    margin-bottom: 16px;
     text-align: left;
+
     /* transition: transform 0.5s ease; */
     border-style: solid;
     border-color: black;
@@ -209,7 +232,6 @@ html, body {
     /* background-size: cover; */
 }
 
-
 .chat-header-welcome-text {
     position: absolute;
     top: 35%;
@@ -219,24 +241,34 @@ html, body {
 .chat-help-blocks-container {
     position: absolute;
     display: flex;
-    bottom: 15%
+    bottom: 15%;
+    width: 60%;
+    height: 25%;
     /* grid-row: 2; */
+    justify-content: center;
+    align-items: center;
 }
 
 .chat-help-blocks-container-column {
+    /* display: flex; */
     flex: 1;
+    width: 50%;
+    height: 100%;
+    margin: auto;
 }
 
 .chat-help-blocks-container-column>p {
-    font-size: 20px;
+    display: flex; /* Добавлено */
+    justify-content: center; /* Добавлено */
+    align-items: center; /* Добавлено */
+    font-size: calc(calc(1vw + 1vh) * .8);
     border-style: solid;
     border-radius: 20px;
-    /* border-width: 1px; */
     border-color: black;
-    margin: 20px;
-    margin-inline: 20px;
-    padding: 20px;
-    width: 330px;
+    width: 80%;
+    height: 40%;
+    margin-inline: 10%;
+    margin-bottom: 10%;
     text-align: center;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
     background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(145, 145, 145, 0.2));
@@ -246,16 +278,40 @@ html, body {
 .message-chat-ai-container {
     position: absolute;
     display: inline;
-    width: 60%;
+    width: 100%;
     bottom: 15%;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+/* Общие стили для полосы прокрутки */
+.message-chat-ai-container::-webkit-scrollbar {
+    width: 6px; /* Ширина полосы прокрутки */
+}
+
+/* Стили для фона полосы прокрутки */
+.message-chat-ai-container::-webkit-scrollbar-track {
+    background-color: rgba(203, 203, 203, 0); /* Цвет фона полосы прокрутки */ 
+}
+
+/* Стили для "бегунка" (ползунка) полосы прокрутки */
+.message-chat-ai-container::-webkit-scrollbar-thumb {
+    background-color: #4b4b4b; /* Цвет ползунка */
+    border-radius: 12px; /* Скругление углов ползунка */
+}
+
+/* При наведении на полосу прокрутки */
+.message-chat-ai-container::-webkit-scrollbar-thumb:hover {
+    background-color: #848484; /* Измененный цвет ползунка при наведении */
 }
 
 .message-chat-ai-container>pre {
     position: relative;
     /* display: inline; */
-    width: 100%;
+    width: 60%;
     padding-top: 10px;
     padding-bottom: 20px;
+    padding-left: 20%;
     text-align: left;
     font-size: 16px;
     white-space: pre-wrap; /* Сохраняем переносы строк */
@@ -266,7 +322,8 @@ html, body {
     position: relative;
     /* display: inline; */
     font-weight: 700;
-    width: 100%;
+    width: 60%;
+    padding-left: 20%;
     text-align: left;
     font-size: 16px;
 }

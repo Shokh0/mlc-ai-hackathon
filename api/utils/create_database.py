@@ -28,8 +28,11 @@ def create_database():
             c.execute('''CREATE TABLE IF NOT EXISTS messages (
                             message_id INTEGER PRIMARY KEY,
                             topic_id INTEGER,
+                            user_id INTEGER,
                             content TEXT NOT NULL,
-                            FOREIGN KEY (topic_id) REFERENCES topics (id)
+                            is_ai INTEGER CHECK (is_ai IN (1, 0)),
+                            FOREIGN KEY (topic_id) REFERENCES topics (id),
+                            FOREIGN KEY (user_id) REFERENCES users (id)
                         )''')
     except Exception as e:
         print(f'[ERROR] {e}')
