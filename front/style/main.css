@@ -221,6 +221,34 @@ html, body {
 }
 
 
+.message-chat-ai-container {
+    position: absolute;
+    display: inline;
+    width: 60%;
+    bottom: 15%;
+}
+
+.message-chat-ai-container>pre {
+    position: relative;
+    /* display: inline; */
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    text-align: left;
+    font-size: 16px;
+    white-space: pre-wrap; /* Сохраняем переносы строк */
+    overflow-wrap: break-word;
+}
+
+.message-chat-ai-container>p {
+    position: relative;
+    /* display: inline; */
+    font-weight: 700;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+}
+
 .input-chat-ai-container {
     position: absolute;
     display: inline-block;

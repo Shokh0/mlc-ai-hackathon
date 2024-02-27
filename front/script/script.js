@@ -13,15 +13,55 @@ if (document.title == "eduChat"){
     const textarea = document.getElementById("myTextarea");
     const textareaWrapper = document.getElementById("textareaWrapper");
     
+    function delFewElement() {
+        var welcomTextToDelete = document.getElementById("welcomTextToDelete");
+        var helpBlockToDelete = document.getElementById("helpBlockToDelete");
+        welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
+        helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
+    }
+
     function resizeTextarea() {
         textareaWrapper.style.height = "";
         textarea.style.height = "";
         textarea.style.height = textarea.scrollHeight + "px"; // Установить высоту равной высоте textarea
         textareaWrapper.style.height = parseInt(textarea.scrollHeight) + 25 + "px"; // Установить высоту равной высоте textarea
     }
+
+    function getTextareaData(event) {
+        if (event.key === "Enter" && event.shiftKey) {
+            // Не обрабатывать комбинацию Shift + Enter
+             return;
+        }
+        if (event.key === "Enter") { // Обработка нажатия клавиши Enter
+            event.preventDefault(); // Отменяем стандартное действие клавиши Enter (перенос на новую строку)
+            const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
+            console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
+            textarea.value = ""; // Очищаем textarea\
+            
+            const messageList = document.getElementById("message-list");
+            const userP = document.createElement("p");
+            const userPre = document.createElement("pre");
+            userP.textContent = 'You';
+            userPre.textContent = enteredText;
+            messageList.appendChild(userP)
+            messageList.appendChild(userPre)
+            // Ai answer
+            // Api request
+            const aiP = document.createElement("p");
+            const aiPre = document.createElement("pre");
+            aiP.textContent = 'Ai';
+            aiPre.textContent = 'Sorry i`m just fucked up. Answer me to the text time ;)';
+            messageList.appendChild(aiP)
+            messageList.appendChild(aiPre)
+            delFewElement()
+            resizeTextarea()
+        }
+    }
     textarea.addEventListener("input", resizeTextarea);
     textarea.addEventListener("keyup", resizeTextarea);
     textarea.addEventListener("keydown", resizeTextarea);
+    textarea.addEventListener("keypress", getTextareaData);
+
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log(document.title)
