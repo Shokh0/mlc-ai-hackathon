@@ -8,6 +8,7 @@
 ###Install model
 <p>Install model into model directory</p>
 
+
 ###Launch project
-<code>uvicorn main::app --reload --port 80</code>
+<code>uvicorn main:app --reload --port 80</code>
 open insex.html in live server extension
