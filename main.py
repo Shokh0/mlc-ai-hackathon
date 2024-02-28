@@ -162,7 +162,6 @@ async def getMessage(items: GetMessagesDataBase, request: Request) -> JSONRespon
 
 @app.post('/api/addTopic')
 async def addTopic(items: TopicsDataBase, request: Request) -> JSONResponse:
-
     user_id = items.user_id
     title = items.title
     date = datetime.now().strftime('%d.%m.%Y %H:%M')
@@ -170,11 +169,10 @@ async def addTopic(items: TopicsDataBase, request: Request) -> JSONResponse:
     topic_id = row[0]
     host = request.headers.get('host')
     user_id = ls.getUserId(host)
-    topic_id = ls.updateTopicId(user_id, topic_id)
+    ls.updateTopicId(user_id, topic_id)
     print('topic_id', row[0])
     status: bool = True
-    return JSONResponse({'status': status, 'topic_id': topic_id, 'message': 'Тема добавлена'})
-
+    return JSONResponse({'status': status, 'topic_id': row[0], 'message': 'Тема добавлена'})
 
 @app.post('/api/getTopics')
 async def getTopics(items: GetTopicsDataBase, request: Request) -> JSONResponse:

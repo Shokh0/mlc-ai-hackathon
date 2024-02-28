@@ -1,7 +1,6 @@
 // script.js
 
 function apiRequest(method, url, headers, data = null, callback) {
-       
 
     const fetchOptions = {
         method: method,
@@ -53,6 +52,9 @@ function getUserIdAndTopicId(func = null){
         user.topic_id = topic_id;
         console.log('login id: ', user.login_id);
         console.log('topic id: ', user.topic_id);
+        if (user.topic_id == null) {
+            addFewElement();
+        }
         if (func != null){
             func();
         }
@@ -121,12 +123,15 @@ function getTopics(){
         }   
         const elements = document.querySelectorAll('.topicName');
         // console.log('Elemnt id', elements);
-        
+        if (user.topic_id != null){
+            getMessages(user.topic_id);
+        }   
         // Добавляем обработчик события для каждого элемента
         for (let element of elements) {
             element.addEventListener('click', function() {
                 // console.log('Вы нажали на абзац.', element);
                 console.log('Вы нажали на абзац c id', element.id);
+                // window.location.href = "http://127.0.0.1:5500/front/ai-chat.html";
                 user.topic_id = element.id;
                 getMessages(element.id);
             });
@@ -145,8 +150,8 @@ function getMessages(topic_id) {
         'user_id': user.login_id, 
         'topic_id': topic_id,
     };  
-    console.log('login_id: ', user.login_id)
-    console.log('topic_id: ', topic_id)
+    console.log('getMessages login_id: ', user.login_id)
+    console.log('getMessages topic_id: ', topic_id)
 
     apiRequest("POST", url, headers, data, function (jsonResponse){
         console.log('messages: ', jsonResponse)
@@ -194,6 +199,13 @@ function getMessages(topic_id) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    // try{
+    //     delFewElement();
+    // } catch (error) {
+    //     // Обработка ошибки
+    //     console.log("Произошла ошибка:", error.message);
+    // }
+    
     getUserIdAndTopicId(getTopics);
 });
 
@@ -206,6 +218,38 @@ function delFewElement() {
     var helpBlockToDelete = document.getElementById("helpBlockToDelete");
     welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
     helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
+}
+
+function addFewElement() {
+    // Создаем элементы
+    var imageElement = document.createElement("img");
+    imageElement.id = "welcomTextToDelete";
+    imageElement.className = "chat-header-welcome-text";
+    imageElement.src = "media\\svg\\chat\\header.svg";
+    imageElement.alt = "chat header";
+
+    // Создаем элементы
+    var helpBlockContainer = document.createElement("div");
+    helpBlockContainer.id = "helpBlockToDelete";
+    helpBlockContainer.className = "chat-help-blocks-container";
+
+    var column1 = document.createElement("div");
+    column1.className = "chat-help-blocks-container-column";
+    column1.innerHTML = "<p><b>Solve equation in two variables...</b></p><p><b>Choose OKVED for a coffee shop...</b></p>";
+
+    var column2 = document.createElement("div");
+    column2.className = "chat-help-blocks-container-column";
+    column2.innerHTML = "<p><b>All Newton's laws...</b></p><p><b>Build a demand schedule...</b></p>";
+
+    // Добавляем элементы в DOM
+    helpBlockContainer.appendChild(column1);
+    helpBlockContainer.appendChild(column2);
+
+    // Добавляем созданный блок в нужное место в DOM
+    var parentElement = document.getElementById("chat-space"); // Замените "parentElementId" на ID элемента, куда вы хотите добавить созданный блок
+    parentElement.appendChild(imageElement);
+    parentElement.appendChild(helpBlockContainer);
+
 }
 
 function resizeTextarea() {
@@ -222,6 +266,12 @@ function getTextareaData(event) {
         return;
     }
     if (event.key === "Enter") { // Обработка нажатия клавиши Enter
+        try{
+            delFewElement();
+        } catch (error) {
+            // Обработка ошибки
+            console.log("Произошла ошибка:", error.message);
+        }
         event.preventDefault(); // Отменяем стандартное действие клавиши Enter (перенос на новую строку)
         const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
         console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
@@ -242,11 +292,9 @@ function getTextareaData(event) {
         userPre.textContent = enteredText;
         messageList.appendChild(userP);
         messageList.appendChild(userPre);
+
         apiRequest("POST", url, headers, data, function (jsonResponse) {
-            
-            // Api request
-            // Ai answer
-            
+        
             // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
             const aiAnswer = jsonResponse['message'];
             const aiP = document.createElement("p");
@@ -255,25 +303,14 @@ function getTextareaData(event) {
             aiPre.textContent = aiAnswer;
             messageList.appendChild(aiP);
             messageList.appendChild(aiPre);
-    
-            scrollContainerDown();
-            resizeTextarea();
-            try{
-                delFewElement();
-            } catch (error) {
-                // Обработка ошибки
-                console.log("Произошла ошибка:", error.message);
-            }
+
             const message_url = 'http://127.0.0.1:80/api/addMessage';
     
-            const user_headers = {
+            const headers = {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
             };
-            const ai_headers = {
-                'accept': 'application/json',
-                'Content-Type': 'application/json',
-            };
+
             const user_data = {
                 'topic_id': user.topic_id, 
                 'content': enteredText, 
@@ -305,7 +342,12 @@ function getTextareaData(event) {
                     user.topic_id = jsonResponse['topic_id'];
                     console.log('user.topic_id: ', user.topic_id);
                     // alert('addTopic response: ' + user.topic_id);
-            
+    
+                    const message_url = 'http://127.0.0.1:80/api/addMessage';
+                    const headers = {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    };
                     const user_data = {
                         'topic_id': jsonResponse['topic_id'],
                         'content': enteredText, 
@@ -315,26 +357,26 @@ function getTextareaData(event) {
                         'topic_id': jsonResponse['topic_id'],
                         'content': aiAnswer, 
                         'is_ai': 1,
-                    };    
+                    };  
                     // Отправляем запросы на добавление сообщений пользователя и AI
-                    apiRequest("POST", message_url, user_headers, user_data, function(jsonResponse) {
+                    apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
                         console.log(jsonResponse['message']);
-                        apiRequest("POST", message_url, ai_headers, ai_data, function(jsonResponse) {
-                            console.log(jsonResponse['message']);
-                            // console.log('addMessage');
-                            getMessages(user.topic_id);
-                        });
+                    });
+                    apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
+                        console.log(jsonResponse['message']);
                     });
                 });
             } else {
                 // Если у пользователя уже есть топик, просто отправляем сообщения
-                apiRequest("POST", message_url, user_headers, user_data, function(jsonResponse) {
+                apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
                     console.log(jsonResponse['message']);
-                    apiRequest("POST", message_url, ai_headers, ai_data, function(jsonResponse) {
-                        console.log(jsonResponse['message']);
-                    });
                 });
-            }                   
+                apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
+                    console.log(jsonResponse['message']);
+                });
+            }
+            scrollContainerDown();
+            resizeTextarea();                   
         });
     }
 }

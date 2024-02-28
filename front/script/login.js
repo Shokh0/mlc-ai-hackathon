@@ -52,7 +52,8 @@ searchAuthorizationButtonImg.addEventListener('click', function() {
     apiRequest("POST", url, headers, data, function(jsonResponse){
         if (jsonResponse['status'] == true){
             // user.login = inputLogin;
-            window.location.href = "http://127.0.0.1:5500/front/ai-chat.html";
+            // console.log(jsonResponse["message"]);
+            window.location.href = jsonResponse["message"];
         }
     })
 });
