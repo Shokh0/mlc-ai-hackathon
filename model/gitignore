@@ -1,1 +1,4 @@
 checkpoint-*/
+__pycache__
+model\pytorch_model.bin
+.bin

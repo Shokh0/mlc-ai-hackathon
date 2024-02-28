@@ -8,15 +8,15 @@ from starlette.responses import JSONResponse
 from api.api_services.schemes import *
 from api.database_handler import *
 from api.utils.usefull_func import hashPassword
-# from inference.model_wrapper import AiAssistant
+from inference.model_wrapper import AiAssistant
 import copy
 import sqlite3
 
 """This module includes main method for working with AI assistant model."""
 
 
-# ai_assitant = AiAssistant()
-# chat = ai_assitant.create_chat()
+ai_assitant = AiAssistant()
+chat = ai_assitant.create_chat()
 
 class LocalStoreg:
 
@@ -70,6 +70,13 @@ async def readDocsApi() -> RedirectResponse:
 async def readRedocApi() -> RedirectResponse: 
     return RedirectResponse(f"/redoc")
 
+@app.post('/api/lamini')
+async def lamini(question : LaminiRequest):
+    res = chat.run(question.question)
+    result = copy.deepcopy(res)
+    status = True
+    return JSONResponse({'status': status, 'message': result})
+
 @app.post('/api/newChat')
 async def getNewChat(items: NeweChatData, request: Request) -> JSONResponse:
     host = request.headers.get('host')
@@ -77,12 +84,6 @@ async def getNewChat(items: NeweChatData, request: Request) -> JSONResponse:
     ls.updateTopicId(user_id, None)
     status = True 
     return JSONResponse({'status': status})
-# @app.post('/lamini')
-# async def lamini(question : LaminiRequest):
-#     res = chat.run(question)
-#     result = copy.deepcopy(res)
-#     status = True
-#     return JSONResponse({'status': status, 'message': result})
 
 @app.post('/api/getUserIdAndTopicId')
 async def getUserIdAndTopicId(items: UserIdAndTopicIdData, request: Request):

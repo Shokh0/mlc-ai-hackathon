@@ -15,12 +15,6 @@ html, body {
 
 }
 
-/* .main-container {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-} */
-
 .welcome-page-container {
     width: 100%; /* Ширина контейнера */
     height: 100vh; /* Высота контейнера (на всю высоту окна) */

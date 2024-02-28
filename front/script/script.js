@@ -1,31 +1,32 @@
 // script.js
 
 function apiRequest(method, url, headers, data = null, callback) {
-        
-    var request = new XMLHttpRequest();
-    request.open(method, url);
-    Object.keys(headers).forEach(key => {
-        request.setRequestHeader(key, headers[key]);
-    });
-    
-    request.onload = function() {
-        if (request.status === 200) {
-            const jsonResponse = JSON.parse(request.responseText); // парсим JSON
-            console.log('jsonResponse', jsonResponse); // выводим результат в консоль
-            callback(jsonResponse);
-        } else {
-            console.log('Ошибка при выполнении запроса:', request.statusText);
-        }
+       
+
+    const fetchOptions = {
+        method: method,
+        headers: headers,
+        mode: 'cors', // В реальном примере могут быть другие настройки
     };
-    
-    request.onerror = function() {
-        console.log('Ошибка сети');
-    };
-    if (data != null) {
-        request.send(JSON.stringify(data));
-    }else{
-        request.send();
+
+    if (data !== null) {
+        fetchOptions.body = JSON.stringify(data);
     }
+
+    fetch(url, fetchOptions)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Ошибка при выполнении запроса: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(jsonResponse => {
+        console.log('jsonResponse', jsonResponse);
+        callback(jsonResponse);
+    })
+    .catch(error => {
+        console.error('Произошла ошибка:', error.message);
+    });
 }
 
 var user = {
@@ -225,7 +226,15 @@ function getTextareaData(event) {
         const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
         console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
         textarea.value = ""; // Очищаем textarea\
-
+        const url = 'http://127.0.0.1:80/api/lamini';
+    
+        const headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+        };
+        const data = {
+            'question': enteredText,
+        };  
         const messageList = document.getElementById("message-list");
         const userP = document.createElement("p");
         const userPre = document.createElement("pre");
@@ -233,95 +242,100 @@ function getTextareaData(event) {
         userPre.textContent = enteredText;
         messageList.appendChild(userP);
         messageList.appendChild(userPre);
-        // Api request
-        // Ai answer
-        const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
-        const aiP = document.createElement("p");
-        const aiPre = document.createElement("pre");
-        aiP.textContent = 'Ai';
-        aiPre.textContent = aiAnswer;
-        messageList.appendChild(aiP);
-        messageList.appendChild(aiPre);
-
-        scrollContainerDown();
-        resizeTextarea();
-        try{
-            delFewElement();
-        } catch (error) {
-            // Обработка ошибки
-            console.log("Произошла ошибка:", error.message);
-        }
-        const message_url = 'http://127.0.0.1:80/api/addMessage';
-
-        const user_headers = {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-        };
-        const ai_headers = {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-        };
-        const user_data = {
-            'topic_id': user.topic_id, 
-            'content': enteredText, 
-            'is_ai': 0,
-        };
-        const ai_data = {
-            'topic_id': user.topic_id, 
-            'content': aiAnswer, 
-            'is_ai': 1,
-        };
-        
-        if (user.topic_id == null) {
-            const topicTitle = safeSubstring(enteredText, 20);
-            const topic_url = 'http://127.0.0.1:80/api/addTopic';
-        
-            const headers = {
+        apiRequest("POST", url, headers, data, function (jsonResponse) {
+            
+            // Api request
+            // Ai answer
+            
+            // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
+            const aiAnswer = jsonResponse['message'];
+            const aiP = document.createElement("p");
+            const aiPre = document.createElement("pre");
+            aiP.textContent = 'Ai';
+            aiPre.textContent = aiAnswer;
+            messageList.appendChild(aiP);
+            messageList.appendChild(aiPre);
+    
+            scrollContainerDown();
+            resizeTextarea();
+            try{
+                delFewElement();
+            } catch (error) {
+                // Обработка ошибки
+                console.log("Произошла ошибка:", error.message);
+            }
+            const message_url = 'http://127.0.0.1:80/api/addMessage';
+    
+            const user_headers = {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
             };
-            const data = {
-                'user_id': user.login_id, 
-                'title': topicTitle,
-            };    
-            console.log('topicTitle: ', topicTitle);
-            console.log('user.login_id: ', user.login_id);
-        
-            // Отправляем запрос на добавление топика
-            apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
-                user.topic_id = jsonResponse['topic_id'];
-                console.log('user.topic_id: ', user.topic_id);
-                // alert('addTopic response: ' + user.topic_id);
-        
-                const user_data = {
-                    'topic_id': jsonResponse['topic_id'],
-                    'content': enteredText, 
-                    'is_ai': 0,
+            const ai_headers = {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+            };
+            const user_data = {
+                'topic_id': user.topic_id, 
+                'content': enteredText, 
+                'is_ai': 0,
+            };
+            const ai_data = {
+                'topic_id': user.topic_id, 
+                'content': aiAnswer, 
+                'is_ai': 1,
+            };
+            
+            if (user.topic_id == null) {
+                const topicTitle = safeSubstring(enteredText, 20);
+                const topic_url = 'http://127.0.0.1:80/api/addTopic';
+            
+                const headers = {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
                 };
-                const ai_data = {
-                    'topic_id': jsonResponse['topic_id'],
-                    'content': aiAnswer, 
-                    'is_ai': 1,
+                const data = {
+                    'user_id': user.login_id, 
+                    'title': topicTitle,
                 };    
-                // Отправляем запросы на добавление сообщений пользователя и AI
+                console.log('topicTitle: ', topicTitle);
+                console.log('user.login_id: ', user.login_id);
+            
+                // Отправляем запрос на добавление топика
+                apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
+                    user.topic_id = jsonResponse['topic_id'];
+                    console.log('user.topic_id: ', user.topic_id);
+                    // alert('addTopic response: ' + user.topic_id);
+            
+                    const user_data = {
+                        'topic_id': jsonResponse['topic_id'],
+                        'content': enteredText, 
+                        'is_ai': 0,
+                    };
+                    const ai_data = {
+                        'topic_id': jsonResponse['topic_id'],
+                        'content': aiAnswer, 
+                        'is_ai': 1,
+                    };    
+                    // Отправляем запросы на добавление сообщений пользователя и AI
+                    apiRequest("POST", message_url, user_headers, user_data, function(jsonResponse) {
+                        console.log(jsonResponse['message']);
+                        apiRequest("POST", message_url, ai_headers, ai_data, function(jsonResponse) {
+                            console.log(jsonResponse['message']);
+                            // console.log('addMessage');
+                            getMessages(user.topic_id);
+                        });
+                    });
+                });
+            } else {
+                // Если у пользователя уже есть топик, просто отправляем сообщения
                 apiRequest("POST", message_url, user_headers, user_data, function(jsonResponse) {
                     console.log(jsonResponse['message']);
                     apiRequest("POST", message_url, ai_headers, ai_data, function(jsonResponse) {
                         console.log(jsonResponse['message']);
-                        // console.log('addMessage');
-                        getMessages(user.topic_id);
                     });
                 });
-            });
-        } else {
-            // Если у пользователя уже есть топик, просто отправляем сообщения
-            apiRequest("POST", message_url, user_headers, user_data, function(jsonResponse) {
-                console.log(jsonResponse['message']);
-                apiRequest("POST", message_url, ai_headers, ai_data, function(jsonResponse) {
-                    console.log(jsonResponse['message']);
-                });
-            });
-        }                   
+            }                   
+        });
     }
 }
 
