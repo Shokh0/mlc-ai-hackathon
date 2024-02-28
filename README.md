@@ -11,4 +11,4 @@ Install model into model directory
 
 ### Launch project
 <code>uvicorn main:app --reload --port 80</code>
-open insex.html in live server extension
+open index.html in live server extension
