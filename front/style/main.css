@@ -183,12 +183,17 @@ html, body {
     height: 1.1vw;
     margin: auto;
     margin-right: 6px;
+    opacity: 0;
     transition: transform 120ms ease;
 }
 
 .chat-topics-bar-list>div>img:active {
     transform: scale(1.2);
 }
+
+/* .chat-topics-bar-list>div>img:hover {
+    box-shadow: 1, 1, 1, 4; 
+} */
 
 .chat-header-logo-container {
     position: relative;

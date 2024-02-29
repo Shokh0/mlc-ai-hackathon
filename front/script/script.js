@@ -138,6 +138,14 @@ function getTopics(){
             div.appendChild(span);
             div.appendChild(img);
             topicList.appendChild(div);
+            div.addEventListener  ("mouseover", function () {
+                // console.log('Вы навелись на абзац c id', img.id);
+                img.style.opacity = 1;
+            });
+            div.addEventListener  ("mouseout", function () {
+                // console.log('Вы отвели мишь с абзаца c id', img.id);
+                img.style.opacity = 0;
+            });
             img.addEventListener('click', function() {
                 // console.log('Вы нажали на абзац.', element);
                 console.log('Вы нажали на абзац c id', img.id);
@@ -452,6 +460,7 @@ function getNewChat() {
         addFewElement();
     });
 }
+
 
 
 // Получение необходимых значений из id объекта
