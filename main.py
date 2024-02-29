@@ -188,9 +188,7 @@ async def getTopics(items: DelTopicDataBase, request: Request) -> JSONResponse:
     topic_id = items.topic_id
     with sqlite3.connect('api/db.sqlite3') as c:
         c.execute(f"""DELETE FROM messages WHERE topic_id = '{topic_id}'""")
-        c.commit()
         c.execute(f"""DELETE FROM topics WHERE id = '{topic_id}'""")
-        c.commit()
     # print(topics)
     status: bool = True
     return JSONResponse({'status': status})
