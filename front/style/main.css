@@ -78,7 +78,7 @@ html, body {
     margin: auto;
 	width: 27vw;
     top: 26.5vw;
-    transition: color, transform 500ms ease;
+    transition: transform 500ms ease;
 }   
 
 .authorizationFrom-input-login {
@@ -179,34 +179,55 @@ html, body {
 
 .chat-header-logo-container {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     top: 1vw;
     left: 1vw;
     width: 14vw;
+    height: 2.5vw;
     /* background-color: aqua; */
     background-size: cover;
+    /* transition: transform 0.5s ease; */
+    border-style: solid;
+    border-color: black;
+    border-radius: 6px;
+    color: black; 
+}
+
+.chat-header-logo-container:hover {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
 }
 
 .chat-header-logo {
-    position: relative;
+    position: absolute;
     width: 2.4vw;
-    background-size: cover;
+    left: 1px;
+    margin: auto;
+    /* background-size: cover; */
 }
 
 .chat-header-logo-text {
     position: relative;
     width: 5vw;
-    margin-left: .8vw;
-    background-size: cover;
+    margin: auto;
+    /* margin-left: .8vw; */
+    /* background-size: cover; */
 }
 
 .chat-header-writeicon {
     position: absolute;
     width: 1vw;
-    right: 1px;
-    margin-top: .5vw;
+    right: 5px;
+    margin: auto;
     background-size: cover;
+    transition: transform 150ms ease;
 }
 
+.chat-header-writeicon:active {
+    transform: scale(1.2);
+}
 
 .chat-space {
     position: relative ;
@@ -221,7 +242,7 @@ html, body {
 .chat-header-edu-chat {
     position: absolute;
     width: 7vw;
-    top: 2.5%;
+    top: 1.4vw;
     left: 2%
     /* background-size: cover; */
 }
@@ -268,6 +289,10 @@ html, body {
     background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(145, 145, 145, 0.2));
 }
 
+.chat-help-blocks-container-column>p:hover {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
+}
 
 .message-chat-ai-container {
     position: absolute;
@@ -324,7 +349,9 @@ html, body {
 
 .input-chat-ai-container {
     position: absolute;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     bottom: 5%;
     border-style: solid;
     border-radius: 16px;
@@ -354,8 +381,13 @@ html, body {
 
 .input-chat-ai-icon {
     position: absolute;
+    margin: auto;
     right: 1vw;
     width: 26px;
-    bottom: 6%;
-    transform: translate(-50%, -50%);
+    /* box-sizing: border-box; */
+    transition: transform 150ms ease;
+}
+
+.input-chat-ai-icon:active {
+    transform: scale(1.2);
 }

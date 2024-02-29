@@ -179,15 +179,15 @@ function getMessages(topic_id) {
                 const messageList = document.getElementById("message-list");
                 const userP = document.createElement("p");
                 const userPre = document.createElement("pre");
-                userP.textContent = 'You';
+                userP.textContent = 'You:';
                 userPre.textContent = message[3];
                 messageList.appendChild(userP);
                 messageList.appendChild(userPre);
             }else{
-                const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
+                // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
                 const aiP = document.createElement("p");
                 const aiPre = document.createElement("pre");
-                aiP.textContent = 'Ai';
+                aiP.textContent = 'EduChat:';
                 aiPre.textContent = message[3];
                 messageList.appendChild(aiP);
                 messageList.appendChild(aiPre);    
@@ -288,7 +288,7 @@ function getTextareaData(event) {
         const messageList = document.getElementById("message-list");
         const userP = document.createElement("p");
         const userPre = document.createElement("pre");
-        userP.textContent = 'You';
+        userP.textContent = 'You:';
         userPre.textContent = enteredText;
         messageList.appendChild(userP);
         messageList.appendChild(userPre);
@@ -299,7 +299,7 @@ function getTextareaData(event) {
             const aiAnswer = jsonResponse['message'];
             const aiP = document.createElement("p");
             const aiPre = document.createElement("pre");
-            aiP.textContent = 'Ai';
+            aiP.textContent = 'EduChat:';
             aiPre.textContent = aiAnswer;
             messageList.appendChild(aiP);
             messageList.appendChild(aiPre);
