@@ -164,13 +164,14 @@ function getMessages(topic_id) {
             console.log("Произошла ошибка:", error.message);
         }
         try{
-            // Находим элемент, у которого нужно удалить все дочерние элементы
-            var parentElement = document.getElementById("message-list");
+            // // Находим элемент, у которого нужно удалить все дочерние элементы
+            // var parentElement = document.getElementById("message-list");
             
-            // Удаляем все дочерние элементы
-            while (parentElement.firstChild) {
-                parentElement.removeChild(parentElement.firstChild);
-            }
+            // // Удаляем все дочерние элементы
+            // while (parentElement.firstChild) {
+            //     parentElement.removeChild(parentElement.firstChild);
+            // }
+            delAllMessages();
         } catch (error) {
             console.log("Произошла ошибка:", error.message);
         }
@@ -212,6 +213,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const textarea = document.getElementById("myTextarea");
 const textareaWrapper = document.getElementById("textareaWrapper");
+
+function delAllMessages() {
+    // Находим элемент, у которого нужно удалить все дочерние элементы
+    var parentElement = document.getElementById("message-list");
+            
+    // Удаляем все дочерние элементы
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
+}
 
 function delFewElement() {
     var welcomTextToDelete = document.getElementById("welcomTextToDelete");
@@ -260,14 +271,17 @@ function resizeTextarea() {
 }
 
 function enterData () {
+    const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
+    console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
+    if (enteredText == "") {
+        return null;
+    }
     try{
         delFewElement();
     } catch (error) {
         // Обработка ошибки
         console.log("Произошла ошибка:", error.message);
     }
-    const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
-    console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
     textarea.value = ""; // Очищаем textarea\
     const url = 'http://127.0.0.1:80/api/lamini';
 
@@ -399,6 +413,7 @@ function getNewChat() {
     apiRequest("POST", url, headers, data, function(jsonResponse){
         console.log(jsonResponse);
         user.topic_id = null;
+        delAllMessages();
         addFewElement();
     });
 }
