@@ -117,11 +117,11 @@ html, body {
     position: relative;
     width: 86%;
     margin: auto;
-    margin-top: 6vw;
+    margin-top: 2vw;
     background-size: cover;    
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 600px;
+    max-height: 80%;
 }
 
 /* Общие стили для полосы прокрутки */
@@ -176,35 +176,39 @@ html, body {
     /* transition-delay: 1s; */
 }
 
-
 .chat-header-logo-container {
-    position: absolute;
+    position: relative;
+    margin: auto;
+    top: 1vw;
+    width: 86%;
+    height: 2.5vw;
+}
+
+.chat-header-logo-container-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 1vw;
-    left: 1vw;
-    width: 14vw;
-    height: 2.5vw;
-    /* background-color: aqua; */
-    background-size: cover;
-    /* transition: transform 0.5s ease; */
+    width: 94%;
+    height: 100%;
     border-style: solid;
     border-color: black;
     border-radius: 6px;
     color: black; 
+    background-size: cover;
 }
 
-.chat-header-logo-container:hover {
+.chat-header-logo-container-wrapper:hover {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
 }
 
 .chat-header-logo {
-    position: absolute;
+    position: relative;
     width: 2.4vw;
-    left: 1px;
     margin: auto;
+    margin-left: 3%;
+    margin-right: 0;
+    /* left: -30px; */
     /* background-size: cover; */
 }
 
@@ -212,16 +216,17 @@ html, body {
     position: relative;
     width: 5vw;
     margin: auto;
+    margin-left: 5%;
     /* margin-left: .8vw; */
     /* background-size: cover; */
 }
 
 .chat-header-writeicon {
-    position: absolute;
+    position: relative;
     width: 1vw;
-    right: 5px;
     margin: auto;
-    background-size: cover;
+    margin-right: 6px;
+    /* background-size: cover; */
     transition: transform 150ms ease;
 }
 

@@ -114,7 +114,7 @@ function getTopics(){
         console.log('jsonResponse 2', jsonResponse); // выводим результат в консоль
         const topics = jsonResponse['topics'];
         const topicList = document.getElementById("topic-list");
-        
+        topics.reverse();
         for (let topic of topics) {
             // console.log(book);
             const p = document.createElement("p");
