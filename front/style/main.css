@@ -145,35 +145,49 @@ html, body {
     background-color: #848484; /* Измененный цвет ползунка при наведении */
 }
 
-.chat-topics-bar-list>p {
-    /* position: absolute;*/
-    text-decoration: none; 
-    font-size: calc(calc(1vw + 1vh) * 1.1);
+.topic-name-container {
+    display: flex;
     padding-top: .5vw;
     padding-bottom: .5vw;
     padding-left: .4vw;
     width: 94%;
     margin-top: 16px;
     margin-bottom: 16px;
-    text-align: left;
-
-    /* transition: transform 0.5s ease; */
     border-style: solid;
     border-color: black;
     border-radius: 6px;
+}
+
+.chat-topics-bar-list>div>span {
+    text-decoration: none; 
+    font-size: calc(calc(1vw + 1vh) * 1.1);
+    text-align: left;
     color: black; 
 }
-.chat-topics-bar-list>p>a {
+
+.chat-topics-bar-list>div>span>a {
     text-decoration: none; 
     font-size: 1.4vw;
     text-align: left;;
     color: black;
 }
 
-.chat-topics-bar-list>p:hover {
+.chat-topics-bar-list>div:hover {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
     /* transition-delay: 1s; */
+}
+
+.chat-topics-bar-list>div>img {
+    width: 1.1vw;
+    height: 1.1vw;
+    margin: auto;
+    margin-right: 6px;
+    transition: transform 120ms ease;
+}
+
+.chat-topics-bar-list>div>img:active {
+    transform: scale(1.2);
 }
 
 .chat-header-logo-container {
@@ -188,7 +202,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 94%;
+    width: 96.4%;
     height: 100%;
     border-style: solid;
     border-color: black;

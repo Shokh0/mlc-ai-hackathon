@@ -117,16 +117,32 @@ function getTopics(){
         topics.reverse();
         for (let topic of topics) {
             // console.log(book);
-            const p = document.createElement("p");
+            const div = document.createElement("div");
+            const img = document.createElement("img");
+            const span = document.createElement("span");
             const a = document.createElement("a");
-            p.id = topic[0];
-            p.className = 'topicName';
+            div.id = topic[0];
+            div.className = "topic-name-container";
+            img.id = topic[0];
+            img.src = "media\\png\\icon-trash.png";
+            img.className = "icon-dt";
+            span.id = topic[0];
+            span.className = 'topicName';
             a.textContent = topic[2];
             a.href = `#${topic[0]}`;
-            p.appendChild(a);
-            topicList.appendChild(p);
+            span.appendChild(a);
+            div.appendChild(span);
+            div.appendChild(img);
+            topicList.appendChild(div);
+            img.addEventListener('click', function() {
+                // console.log('Вы нажали на абзац.', element);
+                console.log('Вы нажали на абзац c id', img.id);
+                // window.location.href = "http://127.0.0.1:5500/front/ai-chat.html";
+                // user.topic_id = null;
+                delTopic(img.id);
+            });
         }   
-        const elements = document.querySelectorAll('.topicName');
+        const elements = document.querySelectorAll('.topic-name-container');
         // console.log('Elemnt id', elements);
         if (user.topic_id != null){
             getMessages(user.topic_id);
@@ -144,6 +160,22 @@ function getTopics(){
     });
 }
 
+
+function delTopic (topic_id) {
+    const url = 'http://127.0.0.1:80/api/delTopic';
+        
+    const headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const data = { 
+        'topic_id': topic_id,
+    };   
+    apiRequest("POST", url, headers, data, function (jsonResponse) {
+        user.topic_id = null;
+        console.log('user.topic_id: ', user.topic_id, jsonResponse["status"]);
+    });
+}
 
 // Получение всех сообщения связанный с топиком
 function getMessages(topic_id) {
@@ -164,12 +196,9 @@ function getMessages(topic_id) {
         console.log('messages: ', jsonResponse)
         const messages = jsonResponse['messages'];
         const messageList = document.getElementById("message-list");
-        try{
-            delFewElement();
-        } catch (error) {
-            // Обработка ошибки
-            console.log("Произошла ошибка:", error.message);
-        }
+
+        delFewElement();
+     
         try{
             // // Находим элемент, у которого нужно удалить все дочерние элементы
             // var parentElement = document.getElementById("message-list");
@@ -208,43 +237,52 @@ function getMessages(topic_id) {
 
 // Удаение картинок для нового чата
 function addFewElement() {
-    // Создаем элементы
-    var imageElement = document.createElement("img");
-    imageElement.id = "welcomTextToDelete";
-    imageElement.className = "chat-header-welcome-text";
-    imageElement.src = "media\\svg\\chat\\header.svg";
-    imageElement.alt = "chat header";
-    
-    // Создаем элементы
-    var helpBlockContainer = document.createElement("div");
-    helpBlockContainer.id = "helpBlockToDelete";
-    helpBlockContainer.className = "chat-help-blocks-container";
-    
-    var column1 = document.createElement("div");
-    column1.className = "chat-help-blocks-container-column";
-    column1.innerHTML = "<p><b>Solve equation in two variables...</b></p><p><b>Choose OKVED for a coffee shop...</b></p>";
-    
-    var column2 = document.createElement("div");
-    column2.className = "chat-help-blocks-container-column";
-    column2.innerHTML = "<p><b>All Newton's laws...</b></p><p><b>Build a demand schedule...</b></p>";
-    
-    // Добавляем элементы в DOM
-    helpBlockContainer.appendChild(column1);
-    helpBlockContainer.appendChild(column2);
-    
-    // Добавляем созданный блок в нужное место в DOM
-    var parentElement = document.getElementById("chat-space"); // Замените "parentElementId" на ID элемента, куда вы хотите добавить созданный блок
-    parentElement.appendChild(imageElement);
-    parentElement.appendChild(helpBlockContainer);
+
+    var welcomTextToDelete = document.getElementById("welcomTextToDelete");
+        
+    if  (welcomTextToDelete == null){
+        // Создаем элементы
+        var imageElement = document.createElement("img");
+        imageElement.id = "welcomTextToDelete";
+        imageElement.className = "chat-header-welcome-text";
+        imageElement.src = "media\\svg\\chat\\header.svg";
+        imageElement.alt = "chat header";
+        
+        // Создаем элементы
+        var helpBlockContainer = document.createElement("div");
+        helpBlockContainer.id = "helpBlockToDelete";
+        helpBlockContainer.className = "chat-help-blocks-container";
+        
+        var column1 = document.createElement("div");
+        column1.className = "chat-help-blocks-container-column";
+        column1.innerHTML = "<p><b>Solve equation in two variables...</b></p><p><b>Choose OKVED for a coffee shop...</b></p>";
+        
+        var column2 = document.createElement("div");
+        column2.className = "chat-help-blocks-container-column";
+        column2.innerHTML = "<p><b>All Newton's laws...</b></p><p><b>Build a demand schedule...</b></p>";
+        
+        // Добавляем элементы в DOM
+        helpBlockContainer.appendChild(column1);
+        helpBlockContainer.appendChild(column2);
+        
+        // Добавляем созданный блок в нужное место в DOM
+        var parentElement = document.getElementById("chat-space"); // Замените "parentElementId" на ID элемента, куда вы хотите добавить созданный блок
+        parentElement.appendChild(imageElement);
+        parentElement.appendChild(helpBlockContainer);
+    }
     
 }
 
 // Добавление картинок для нового чата
 function delFewElement() {
+    
     var welcomTextToDelete = document.getElementById("welcomTextToDelete");
     var helpBlockToDelete = document.getElementById("helpBlockToDelete");
-    welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
-    helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
+
+    if (welcomTextToDelete != null) {
+        welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
+        helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
+    }
 }
 
 // Удаление всех сообщений
@@ -273,12 +311,7 @@ function enterData () {
     if (enteredText == "") {
         return null;
     }
-    try{
-        delFewElement();
-    } catch (error) {
-        // Обработка ошибки
-        console.log("Произошла ошибка:", error.message);
-    }
+    delFewElement();
     textarea.value = ""; // Очищаем textarea\
     const url = 'http://127.0.0.1:80/api/lamini';
     

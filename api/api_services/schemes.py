@@ -23,6 +23,9 @@ class TopicsDataBase(BaseModel):
 class GetTopicsDataBase(BaseModel):
     login_id: int = Field(..., description='login id')
 
+class DelTopicDataBase(BaseModel):
+    topic_id: int = Field(..., description='topic id')
+
 class MessagesDataBase(BaseModel):
     topic_id: int = Field(..., description='id of the topic')
     content: str = Field(..., description='main text message')
