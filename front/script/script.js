@@ -399,6 +399,7 @@ function getNewChat() {
     apiRequest("POST", url, headers, data, function(jsonResponse){
         console.log(jsonResponse);
         user.topic_id = null;
+        addFewElement();
     });
 }
 
