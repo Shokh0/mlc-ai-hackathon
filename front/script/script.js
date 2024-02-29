@@ -42,7 +42,11 @@ function safeSubstring(str, endValue) {
 
     while (end > 0) {
         try {
-            return str.substring(0, end); // Пытаемся создать срез
+            res = str.substring(0, end); // Пытаемся создать срез
+            if (res.length >= endValue) {
+                return res + "...";
+            }
+            return res;
         } catch (error) {
             if (error instanceof RangeError) {
                 // Если возникает ошибка "index out of range", уменьшаем конечный индекс
@@ -116,7 +120,7 @@ function getTopics(){
         const topicList = document.getElementById("topic-list");
         topics.reverse();
         for (let topic of topics) {
-            // console.log(book);
+            // console.log(topic);
             const div = document.createElement("div");
             const img = document.createElement("img");
             const span = document.createElement("span");
@@ -161,7 +165,7 @@ function getTopics(){
 }
 
 
-function delTopic (topic_id) {
+function delTopic(topic_id) {
     const url = 'http://127.0.0.1:80/api/delTopic';
         
     const headers = {
@@ -171,6 +175,10 @@ function delTopic (topic_id) {
     const data = { 
         'topic_id': topic_id,
     };   
+    // console.log(`.chat-topics-bar-list>#${topic_id}`)
+    const elementToRemove = document.getElementById(topic_id)
+    console.log(elementToRemove)
+    elementToRemove.parentNode.removeChild(elementToRemove)
     apiRequest("POST", url, headers, data, function (jsonResponse) {
         user.topic_id = null;
         console.log('user.topic_id: ', user.topic_id, jsonResponse["status"]);
@@ -200,13 +208,6 @@ function getMessages(topic_id) {
         delFewElement();
      
         try{
-            // // Находим элемент, у которого нужно удалить все дочерние элементы
-            // var parentElement = document.getElementById("message-list");
-            
-            // // Удаляем все дочерние элементы
-            // while (parentElement.firstChild) {
-            //     parentElement.removeChild(parentElement.firstChild);
-            // }
             delAllMessages();
         } catch (error) {
             console.log("Произошла ошибка:", error.message);
@@ -273,6 +274,17 @@ function addFewElement() {
     
 }
 
+// Удаление всех сообщений
+function delAllMessages() {
+    // Находим элемент, у которого нужно удалить все дочерние элементы
+    var parentElement = document.getElementById("message-list");
+    
+    // Удаляем все дочерние элементы
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
+}
+
 // Добавление картинок для нового чата
 function delFewElement() {
     
@@ -285,16 +297,6 @@ function delFewElement() {
     }
 }
 
-// Удаление всех сообщений
-function delAllMessages() {
-    // Находим элемент, у которого нужно удалить все дочерние элементы
-    var parentElement = document.getElementById("message-list");
-    
-    // Удаляем все дочерние элементы
-    while (parentElement.firstChild) {
-        parentElement.removeChild(parentElement.firstChild);
-    }
-}
 
 // Обновление контейнера для ввода вопроса
 function resizeTextarea() {
@@ -329,9 +331,10 @@ function enterData () {
     userPre.textContent = enteredText;
     messageList.appendChild(userP);
     messageList.appendChild(userPre);
-    
+    scrollContainerDown();
+    resizeTextarea(); 
+
     apiRequest("POST", url, headers, data, function (jsonResponse) {
-        
         // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
         const aiAnswer = jsonResponse['message'];
         const aiP = document.createElement("p");
@@ -340,7 +343,8 @@ function enterData () {
         aiPre.textContent = aiAnswer;
         messageList.appendChild(aiP);
         messageList.appendChild(aiPre);
-        
+        scrollContainerDown();
+
         const message_url = 'http://127.0.0.1:80/api/addMessage';
         
         const headers = {
@@ -360,7 +364,7 @@ function enterData () {
         };
         
         if (user.topic_id == null) {
-            const topicTitle = safeSubstring(enteredText, 20);
+            const topicTitle = safeSubstring(enteredText, 16);
             const topic_url = 'http://127.0.0.1:80/api/addTopic';
             
             const headers = {
@@ -398,23 +402,21 @@ function enterData () {
                 // Отправляем запросы на добавление сообщений пользователя и AI
                 apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
                     console.log(jsonResponse['message']);
+                    apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
+                        console.log(jsonResponse['message']);
+                    });
                 });
+            });
+        } else {
+            // Если у пользователя уже есть топик, просто отправляем сообщения  
+            apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
+                console.log(jsonResponse['message']);
                 apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
                     console.log(jsonResponse['message']);
                 });
             });
-        } else {
-            // }
-            // Если у пользователя уже есть топик, просто отправляем сообщения
-            apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
-                console.log(jsonResponse['message']);
-            });
-            apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
-                console.log(jsonResponse['message']);
-            });
         }
-        scrollContainerDown();
-        resizeTextarea();                   
+    // getTopics();       
     });
 }
 
