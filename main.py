@@ -23,6 +23,7 @@ class LocalStoreg:
     def __init__(self):
         self.user_id = {}
         self.topic_id = {}
+        self.name = {}
 
     def updateUserId(self, host, user_id):
         self.user_id.update({host: user_id})    
@@ -39,6 +40,14 @@ class LocalStoreg:
         topic_id = self.user_id.get(user_id, None)
         print('topic_id: ', topic_id)
         return topic_id
+    
+    def updateName(self, user_id, name):
+        self.name.update({user_id: name})
+    
+    def getName(self, user_id):
+        name = self.name.get(user_id, None)
+        print('topic_id: ', name)
+        return name
 
 
 app = FastAPI(
@@ -90,8 +99,9 @@ async def getUserIdAndTopicId(items: UserIdAndTopicIdData, request: Request):
     host = request.headers.get('host')
     user_id = ls.getUserId(host)
     topic_id = ls.getTopicId(user_id)
+    name = ls.getName(user_id)
     status = True
-    return JSONResponse({'status': status, 'user_id': user_id, 'topic_id': topic_id})
+    return JSONResponse({'status': status, 'user_id': user_id, 'topic_id': topic_id, "login": name})
 
 @app.post('/api/singup')
 async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
@@ -131,6 +141,7 @@ async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
             return JSONResponse({'status': status, 'message': 'Пароль не верный'})
         print(request.headers)
         login_id = db.getUser(login)[0]
+        ls.updateName(login_id, login)
         host = request.headers.get('host')
         ls.updateUserId(host, login_id)
         status: bool = True

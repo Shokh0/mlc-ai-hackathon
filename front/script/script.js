@@ -4,6 +4,7 @@
 var user = {
     'login_id': null,
     'topic_id': null,
+    'login': null,
 } 
 
 // Шаблон для api запросов
@@ -77,10 +78,23 @@ function getUserIdAndTopicId(func = null){
     apiRequest("POST", url, headers, data, function (jsonResponse) {
         login_id = jsonResponse['user_id'];
         topic_id = jsonResponse['topic_id'];
+        login = jsonResponse['login'];
         user.login_id = login_id;
         user.topic_id = topic_id;
+        user.login = login;
         console.log('login id: ', user.login_id);
         console.log('topic id: ', user.topic_id);
+
+        const userNameContainer = document.getElementById("userContainer");
+        const img = document.createElement("img");
+        const span = document.createElement("span");
+        img.src = "media\\png\\blank-user.png";
+        img.className = "user-name-container-img";
+        span.textContent = user.login; 
+        span.className = "user-name-container-login";
+        userNameContainer.appendChild(img);
+        userNameContainer.appendChild(span);
+
         if (user.topic_id == null) {
             addFewElement();
         }
