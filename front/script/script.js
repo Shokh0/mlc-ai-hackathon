@@ -259,6 +259,120 @@ function resizeTextarea() {
     textareaWrapper.style.height = parseInt(textarea.scrollHeight) + 25 + "px"; // Установить высоту равной высоте textarea
 }
 
+function enterData () {
+    try{
+        delFewElement();
+    } catch (error) {
+        // Обработка ошибки
+        console.log("Произошла ошибка:", error.message);
+    }
+    const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
+    console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
+    textarea.value = ""; // Очищаем textarea\
+    const url = 'http://127.0.0.1:80/api/lamini';
+
+    const headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const data = {
+        'question': enteredText,
+    };  
+    const messageList = document.getElementById("message-list");
+    const userP = document.createElement("p");
+    const userPre = document.createElement("pre");
+    userP.textContent = 'You:';
+    userPre.textContent = enteredText;
+    messageList.appendChild(userP);
+    messageList.appendChild(userPre);
+
+    apiRequest("POST", url, headers, data, function (jsonResponse) {
+    
+        // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
+        const aiAnswer = jsonResponse['message'];
+        const aiP = document.createElement("p");
+        const aiPre = document.createElement("pre");
+        aiP.textContent = 'EduChat:';
+        aiPre.textContent = aiAnswer;
+        messageList.appendChild(aiP);
+        messageList.appendChild(aiPre);
+
+        const message_url = 'http://127.0.0.1:80/api/addMessage';
+
+        const headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+        };
+
+        const user_data = {
+            'topic_id': user.topic_id, 
+            'content': enteredText, 
+            'is_ai': 0,
+        };
+        const ai_data = {
+            'topic_id': user.topic_id, 
+            'content': aiAnswer, 
+            'is_ai': 1,
+        };
+        
+        if (user.topic_id == null) {
+            const topicTitle = safeSubstring(enteredText, 20);
+            const topic_url = 'http://127.0.0.1:80/api/addTopic';
+        
+            const headers = {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+            };
+            const data = {
+                'user_id': user.login_id, 
+                'title': topicTitle,
+            };    
+            console.log('topicTitle: ', topicTitle);
+            console.log('user.login_id: ', user.login_id);
+        
+            // Отправляем запрос на добавление топика
+            apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
+                user.topic_id = jsonResponse['topic_id'];
+                console.log('user.topic_id: ', user.topic_id);
+                // alert('addTopic response: ' + user.topic_id);
+
+                const message_url = 'http://127.0.0.1:80/api/addMessage';
+                const headers = {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                };
+                const user_data = {
+                    'topic_id': jsonResponse['topic_id'],
+                    'content': enteredText, 
+                    'is_ai': 0,
+                };
+                const ai_data = {
+                    'topic_id': jsonResponse['topic_id'],
+                    'content': aiAnswer, 
+                    'is_ai': 1,
+                };  
+                // Отправляем запросы на добавление сообщений пользователя и AI
+                apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
+                    console.log(jsonResponse['message']);
+                });
+                apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
+                    console.log(jsonResponse['message']);
+                });
+            });
+        } else {
+            // Если у пользователя уже есть топик, просто отправляем сообщения
+            apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
+                console.log(jsonResponse['message']);
+            });
+            apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
+                console.log(jsonResponse['message']);
+            });
+        }
+        scrollContainerDown();
+        resizeTextarea();                   
+    });
+}
+
 function getTextareaData(event) {
     
     if (event.key === "Enter" && event.shiftKey) {
@@ -266,118 +380,8 @@ function getTextareaData(event) {
         return;
     }
     if (event.key === "Enter") { // Обработка нажатия клавиши Enter
-        try{
-            delFewElement();
-        } catch (error) {
-            // Обработка ошибки
-            console.log("Произошла ошибка:", error.message);
-        }
         event.preventDefault(); // Отменяем стандартное действие клавиши Enter (перенос на новую строку)
-        const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
-        console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
-        textarea.value = ""; // Очищаем textarea\
-        const url = 'http://127.0.0.1:80/api/lamini';
-    
-        const headers = {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-        };
-        const data = {
-            'question': enteredText,
-        };  
-        const messageList = document.getElementById("message-list");
-        const userP = document.createElement("p");
-        const userPre = document.createElement("pre");
-        userP.textContent = 'You:';
-        userPre.textContent = enteredText;
-        messageList.appendChild(userP);
-        messageList.appendChild(userPre);
-
-        apiRequest("POST", url, headers, data, function (jsonResponse) {
-        
-            // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
-            const aiAnswer = jsonResponse['message'];
-            const aiP = document.createElement("p");
-            const aiPre = document.createElement("pre");
-            aiP.textContent = 'EduChat:';
-            aiPre.textContent = aiAnswer;
-            messageList.appendChild(aiP);
-            messageList.appendChild(aiPre);
-
-            const message_url = 'http://127.0.0.1:80/api/addMessage';
-    
-            const headers = {
-                'accept': 'application/json',
-                'Content-Type': 'application/json',
-            };
-
-            const user_data = {
-                'topic_id': user.topic_id, 
-                'content': enteredText, 
-                'is_ai': 0,
-            };
-            const ai_data = {
-                'topic_id': user.topic_id, 
-                'content': aiAnswer, 
-                'is_ai': 1,
-            };
-            
-            if (user.topic_id == null) {
-                const topicTitle = safeSubstring(enteredText, 20);
-                const topic_url = 'http://127.0.0.1:80/api/addTopic';
-            
-                const headers = {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                };
-                const data = {
-                    'user_id': user.login_id, 
-                    'title': topicTitle,
-                };    
-                console.log('topicTitle: ', topicTitle);
-                console.log('user.login_id: ', user.login_id);
-            
-                // Отправляем запрос на добавление топика
-                apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
-                    user.topic_id = jsonResponse['topic_id'];
-                    console.log('user.topic_id: ', user.topic_id);
-                    // alert('addTopic response: ' + user.topic_id);
-    
-                    const message_url = 'http://127.0.0.1:80/api/addMessage';
-                    const headers = {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    };
-                    const user_data = {
-                        'topic_id': jsonResponse['topic_id'],
-                        'content': enteredText, 
-                        'is_ai': 0,
-                    };
-                    const ai_data = {
-                        'topic_id': jsonResponse['topic_id'],
-                        'content': aiAnswer, 
-                        'is_ai': 1,
-                    };  
-                    // Отправляем запросы на добавление сообщений пользователя и AI
-                    apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
-                        console.log(jsonResponse['message']);
-                    });
-                    apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
-                        console.log(jsonResponse['message']);
-                    });
-                });
-            } else {
-                // Если у пользователя уже есть топик, просто отправляем сообщения
-                apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
-                    console.log(jsonResponse['message']);
-                });
-                apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
-                    console.log(jsonResponse['message']);
-                });
-            }
-            scrollContainerDown();
-            resizeTextarea();                   
-        });
+        enterData();
     }
 }
 
@@ -399,8 +403,10 @@ function getNewChat() {
 }
 
 const newChat = document.getElementById('new-chat');
+const inputIcon = document.getElementById('inputIcon');
 
 newChat.addEventListener('click', getNewChat);
+inputIcon.addEventListener("click", enterData);
 textarea.addEventListener("input", resizeTextarea);
 textarea.addEventListener("keyup", resizeTextarea);
 textarea.addEventListener("keydown", resizeTextarea);
