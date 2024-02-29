@@ -1,5 +1,12 @@
 // script.js
 
+// Данные для работы с api
+var user = {
+    'login_id': null,
+    'topic_id': null,
+} 
+
+// Шаблон для api запросов
 function apiRequest(method, url, headers, data = null, callback) {
 
     const fetchOptions = {
@@ -28,11 +35,29 @@ function apiRequest(method, url, headers, data = null, callback) {
     });
 }
 
-var user = {
-    'login_id': null,
-    'topic_id': null,
-} 
 
+// Обрезка длинны сообщений
+function safeSubstring(str, endValue) {
+    let end = Math.min(endValue, str.length); // Начальное значение для конечного индекса
+
+    while (end > 0) {
+        try {
+            return str.substring(0, end); // Пытаемся создать срез
+        } catch (error) {
+            if (error instanceof RangeError) {
+                // Если возникает ошибка "index out of range", уменьшаем конечный индекс
+                end--;
+            } else {
+                // Если возникает другая ошибка, выбрасываем исключение
+                throw error;
+            }
+        }
+    }
+    return ''; // Если не удалось создать срез
+}
+
+
+// Получение user id и topic id из сервера
 function getUserIdAndTopicId(func = null){
     const url = 'http://127.0.0.1:80/api/getUserIdAndTopicId';
             
@@ -61,33 +86,13 @@ function getUserIdAndTopicId(func = null){
     });
 }
 
-
-function safeSubstring(str, endValue) {
-    let end = Math.min(endValue, str.length); // Начальное значение для конечного индекса
-
-    while (end > 0) {
-        try {
-            return str.substring(0, end); // Пытаемся создать срез
-        } catch (error) {
-            if (error instanceof RangeError) {
-                // Если возникает ошибка "index out of range", уменьшаем конечный индекс
-                end--;
-            } else {
-                // Если возникает другая ошибка, выбрасываем исключение
-                throw error;
-            }
-        }
-    }
-
-    return ''; // Если не удалось создать срез
-}
-
+// Обновления позиции скрола для контейнера с сообщениями 
 function scrollContainerDown() {
     var container = document.getElementById('message-list');
     container.scrollTop = container.scrollHeight;
 }
 
-
+// Получение всех топиков юзера
 function getTopics(){
     console.log(document.title)
 
@@ -139,6 +144,8 @@ function getTopics(){
     });
 }
 
+
+// Получение всех сообщения связанный с топиком
 function getMessages(topic_id) {
     const url = 'http://127.0.0.1:80/api/getMessage';
         
@@ -199,38 +206,7 @@ function getMessages(topic_id) {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    // try{
-    //     delFewElement();
-    // } catch (error) {
-    //     // Обработка ошибки
-    //     console.log("Произошла ошибка:", error.message);
-    // }
-    
-    getUserIdAndTopicId(getTopics);
-});
-
-
-const textarea = document.getElementById("myTextarea");
-const textareaWrapper = document.getElementById("textareaWrapper");
-
-function delAllMessages() {
-    // Находим элемент, у которого нужно удалить все дочерние элементы
-    var parentElement = document.getElementById("message-list");
-            
-    // Удаляем все дочерние элементы
-    while (parentElement.firstChild) {
-        parentElement.removeChild(parentElement.firstChild);
-    }
-}
-
-function delFewElement() {
-    var welcomTextToDelete = document.getElementById("welcomTextToDelete");
-    var helpBlockToDelete = document.getElementById("helpBlockToDelete");
-    welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
-    helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
-}
-
+// Удаение картинок для нового чата
 function addFewElement() {
     // Создаем элементы
     var imageElement = document.createElement("img");
@@ -238,31 +214,51 @@ function addFewElement() {
     imageElement.className = "chat-header-welcome-text";
     imageElement.src = "media\\svg\\chat\\header.svg";
     imageElement.alt = "chat header";
-
+    
     // Создаем элементы
     var helpBlockContainer = document.createElement("div");
     helpBlockContainer.id = "helpBlockToDelete";
     helpBlockContainer.className = "chat-help-blocks-container";
-
+    
     var column1 = document.createElement("div");
     column1.className = "chat-help-blocks-container-column";
     column1.innerHTML = "<p><b>Solve equation in two variables...</b></p><p><b>Choose OKVED for a coffee shop...</b></p>";
-
+    
     var column2 = document.createElement("div");
     column2.className = "chat-help-blocks-container-column";
     column2.innerHTML = "<p><b>All Newton's laws...</b></p><p><b>Build a demand schedule...</b></p>";
-
+    
     // Добавляем элементы в DOM
     helpBlockContainer.appendChild(column1);
     helpBlockContainer.appendChild(column2);
-
+    
     // Добавляем созданный блок в нужное место в DOM
     var parentElement = document.getElementById("chat-space"); // Замените "parentElementId" на ID элемента, куда вы хотите добавить созданный блок
     parentElement.appendChild(imageElement);
     parentElement.appendChild(helpBlockContainer);
-
+    
 }
 
+// Добавление картинок для нового чата
+function delFewElement() {
+    var welcomTextToDelete = document.getElementById("welcomTextToDelete");
+    var helpBlockToDelete = document.getElementById("helpBlockToDelete");
+    welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
+    helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
+}
+
+// Удаление всех сообщений
+function delAllMessages() {
+    // Находим элемент, у которого нужно удалить все дочерние элементы
+    var parentElement = document.getElementById("message-list");
+    
+    // Удаляем все дочерние элементы
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
+}
+
+// Обновление контейнера для ввода вопроса
 function resizeTextarea() {
     textareaWrapper.style.height = "";
     textarea.style.height = "";
@@ -270,6 +266,7 @@ function resizeTextarea() {
     textareaWrapper.style.height = parseInt(textarea.scrollHeight) + 25 + "px"; // Установить высоту равной высоте textarea
 }
 
+// Обработка полученого сообщения
 function enterData () {
     const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
     console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
@@ -284,7 +281,7 @@ function enterData () {
     }
     textarea.value = ""; // Очищаем textarea\
     const url = 'http://127.0.0.1:80/api/lamini';
-
+    
     const headers = {
         'accept': 'application/json',
         'Content-Type': 'application/json',
@@ -299,9 +296,9 @@ function enterData () {
     userPre.textContent = enteredText;
     messageList.appendChild(userP);
     messageList.appendChild(userPre);
-
-    apiRequest("POST", url, headers, data, function (jsonResponse) {
     
+    apiRequest("POST", url, headers, data, function (jsonResponse) {
+        
         // const aiAnswer = 'Sorry i`m just fucked up. Answer me to the text time ;)';
         const aiAnswer = jsonResponse['message'];
         const aiP = document.createElement("p");
@@ -310,14 +307,14 @@ function enterData () {
         aiPre.textContent = aiAnswer;
         messageList.appendChild(aiP);
         messageList.appendChild(aiPre);
-
+        
         const message_url = 'http://127.0.0.1:80/api/addMessage';
-
+        
         const headers = {
             'accept': 'application/json',
             'Content-Type': 'application/json',
         };
-
+        
         const user_data = {
             'topic_id': user.topic_id, 
             'content': enteredText, 
@@ -332,7 +329,7 @@ function enterData () {
         if (user.topic_id == null) {
             const topicTitle = safeSubstring(enteredText, 20);
             const topic_url = 'http://127.0.0.1:80/api/addTopic';
-        
+            
             const headers = {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -343,13 +340,13 @@ function enterData () {
             };    
             console.log('topicTitle: ', topicTitle);
             console.log('user.login_id: ', user.login_id);
-        
+            
             // Отправляем запрос на добавление топика
             apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
                 user.topic_id = jsonResponse['topic_id'];
                 console.log('user.topic_id: ', user.topic_id);
                 // alert('addTopic response: ' + user.topic_id);
-
+                
                 const message_url = 'http://127.0.0.1:80/api/addMessage';
                 const headers = {
                     'accept': 'application/json',
@@ -374,6 +371,7 @@ function enterData () {
                 });
             });
         } else {
+            // }
             // Если у пользователя уже есть топик, просто отправляем сообщения
             apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
                 console.log(jsonResponse['message']);
@@ -387,6 +385,7 @@ function enterData () {
     });
 }
 
+// Обработка клавиши Enter
 function getTextareaData(event) {
     
     if (event.key === "Enter" && event.shiftKey) {
@@ -399,9 +398,10 @@ function getTextareaData(event) {
     }
 }
 
+// Создание нового чата
 function getNewChat() {
     const url = 'http://127.0.0.1:80/api/newChat';
-        
+    
     const headers = {
         'accept': 'application/json',
         'Content-Type': 'application/json',
@@ -409,7 +409,7 @@ function getNewChat() {
     const data = {
         'something': 'something', 
     };
-
+    
     apiRequest("POST", url, headers, data, function(jsonResponse){
         console.log(jsonResponse);
         user.topic_id = null;
@@ -418,12 +418,19 @@ function getNewChat() {
     });
 }
 
-const newChat = document.getElementById('new-chat');
-const inputIcon = document.getElementById('inputIcon');
 
-newChat.addEventListener('click', getNewChat);
+// Получение необходимых значений из id объекта
+const newChat         = document.getElementById('new-chat');
+const inputIcon       = document.getElementById('inputIcon');
+const textarea        = document.getElementById("myTextarea");
+const textareaWrapper = document.getElementById("textareaWrapper");
+
+
+// Обработчики событий
+document.addEventListener ("DOMContentLoaded", () => {getUserIdAndTopicId(getTopics);});
+newChat.addEventListener  ("click", getNewChat);
 inputIcon.addEventListener("click", enterData);
-textarea.addEventListener("input", resizeTextarea);
-textarea.addEventListener("keyup", resizeTextarea);
-textarea.addEventListener("keydown", resizeTextarea);
-textarea.addEventListener("keypress", getTextareaData);
+textarea.addEventListener ("input", resizeTextarea);
+textarea.addEventListener ("keyup", resizeTextarea);
+textarea.addEventListener ("keydown", resizeTextarea);
+textarea.addEventListener ("keypress", getTextareaData);
