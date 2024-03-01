@@ -6,6 +6,7 @@
     <title>index</title>
     <link rel="stylesheet" href="style\reset.css">
     <link rel="stylesheet" href="style\main.css">
+    <link rel="stylesheet" href="style\index.css">
 </head>
 <body>
     <main class="base-window-container">
@@ -13,8 +14,13 @@
         <div class="welcome-page-container">
             <img class="welcomeWindowTopText" src="media\svg\welcomePage\top_text.svg" alt="welcome image">
             <img class="welcomeWindowBottomText" src="media\svg\welcomePage\bottom_text.svg" alt="welcome image">
-            <a href="login-form.html"><img class="getLogButton" src="media\svg\welcomePage\loginButton.svg" alt="log button"></a>
+            <!-- <a href="login-form.html"><img class="getLogButton" src="media\svg\welcomePage\loginButton.svg" alt="log button"></a> -->
+            <div id="loginButton" class="login-button-container" >
+                <span>Log in to get started</span>
+                <img src="media\\svg\\welcomePage\\icon-input.svg" alt="icon input">
+            </div>
         </div>
     </main>
+    <script src="./script/index.js"></script>
 </body>
 </html>

@@ -10,26 +10,31 @@ class DataBase(Singleton):
         self.db_path = DATABASE_PATH
 
     # users
-    def addUser(self, login, hash_password: str, role: int):
+    def addUser(self, login: str, gmail: str, hash_password: str, role: int):
         with sqlite3.connect(self.db_path) as c:
-            c.execute('INSERT INTO users (login, hash_password, role) VALUES (?, ?, ?)', (login, hash_password, role))
+            c.execute('INSERT INTO users (login, gmail hash_password, role) VALUES (?, ?, ?, ?)', (login, gmail, hash_password, role))
             c.commit()
             print(f'[INFO] new user "{login}" has been added')
     
-    def getUser(self, login: str):
+    def getUser(self, gmail: str):
         with sqlite3.connect(self.db_path) as c:
-            user_info = c.execute('SELECT * FROM users WHERE login = ?', (login,)).fetchone()
+            user_info = c.execute('SELECT * FROM users WHERE gmail = ?', (gmail,)).fetchone()
             return user_info
-
-    def getPasswordFromLogin(self, login: str):
+    
+    def getUserNameFromGmail(self, gmail: str):
         with sqlite3.connect(self.db_path) as c:
-            hash_password = c.execute('SELECT hash_password FROM users WHERE login = ?', (login,)).fetchone()
+            user_name = c.execute("SELECT login FROM users WHERE gmail = ?", (gmail,)).fetchone()
+            return user_name
+
+    def getPasswordFromLogin(self, gmail: str):
+        with sqlite3.connect(self.db_path) as c:
+            hash_password = c.execute('SELECT hash_password FROM users WHERE gmail = ?', (gmail,)).fetchone()
             return hash_password
 
-    def getAllUsersLogin(self):
+    def getAllUsersGmail(self):
         with sqlite3.connect(self.db_path) as c:
-            logins = c.execute('SELECT login FROM users').fetchall()
-            return logins
+            gmails = c.execute('SELECT gmail FROM users').fetchall()
+            return gmails
         
     def getAllPasswords(self):
         with sqlite3.connect(self.db_path) as c:

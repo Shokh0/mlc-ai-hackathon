@@ -107,13 +107,14 @@ async def getUserIdAndTopicId(items: UserIdAndTopicIdData, request: Request):
 async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
     host = request.headers.get('host')
     login: str = items.login
+    gmail: str = items.gmail
     password: str = items.password
     teacher_student_flag: int = items.teacher_student_flag
-    all_logins = db.getAllUsersLogin()
+    all_gmails = db.getAllUsersGmail()
     
-    if login in all_logins:
+    if gmail in all_gmails:
         status: bool = False
-        return JSONResponse({'status': status, 'message': 'Пользователь с таким логином уже есть'})
+        return JSONResponse({'status': status, 'message': 'Пользователь с таким gmail уже есть'})
      
     hash_password = hashPassword(password)
     db.addUser(login, hash_password, teacher_student_flag)
@@ -123,25 +124,26 @@ async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
 
 @app.post('/api/login')
 async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
-    login: str = items.login
+    gmail: str = items.gmail
     password: str = items.password
-    all_logins = db.getAllUsersLogin()
-    if all_logins != None:
-        all_logins = list(map(lambda x: x[0], all_logins))
+    all_gmails = db.getAllUsersGmail()
+    if all_gmails != None:
+        all_gmails = list(map(lambda x: x[0], all_gmails))
 
-    if login not in all_logins:
+    if gmail not in all_gmails:
         status: bool = False
-        return JSONResponse({'status': status, 'message': 'Пользователя с таким логином нет'})
+        return JSONResponse({'status': status, 'message': 'Пользователя с таким gmail нет'})
     new_hash_password = hashPassword(password)
-    curent_hash_password = db.getPasswordFromLogin(login)
+    curent_hash_password = db.getPasswordFromLogin(gmail)
     
     if curent_hash_password != None:
         if new_hash_password != curent_hash_password[0]: 
             status: bool = False
             return JSONResponse({'status': status, 'message': 'Пароль не верный'})
         print(request.headers)
-        login_id = db.getUser(login)[0]
-        ls.updateName(login_id, login)
+        user_name = db.getUserNameFromGmail(gmail)
+        login_id = db.getUser(gmail)[0]
+        ls.updateName(login_id, user_name)
         host = request.headers.get('host')
         ls.updateUserId(host, login_id)
         status: bool = True

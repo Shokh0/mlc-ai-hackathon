@@ -13,6 +13,7 @@ def create_database():
             c.execute('''CREATE TABLE IF NOT EXISTS users (
                             id INTEGER PRIMARY KEY,
                             login TEXT(150),
+                            gmail STRING(200),
                             hash_password TEXT(64) NOT NULL,
                             role INTEGER CHECK (role IN (1, 0))
                         )''')

@@ -152,11 +152,11 @@ function getTopics(){
             div.appendChild(span);
             div.appendChild(img);
             topicList.appendChild(div);
-            div.addEventListener  ("mouseover", function () {
+            div.addEventListener("mouseover", function () {
                 // console.log('Вы навелись на абзац c id', img.id);
                 img.style.opacity = 1;
             });
-            div.addEventListener  ("mouseout", function () {
+            div.addEventListener("mouseout", function () {
                 // console.log('Вы отвели мишь с абзаца c id', img.id);
                 img.style.opacity = 0;
             });
@@ -277,11 +277,11 @@ function addFewElement() {
         helpBlockContainer.className = "chat-help-blocks-container";
         
         var column1 = document.createElement("div");
-        column1.className = "chat-help-blocks-container-column";
+        column1.className = "chat-help-blocks-container-column-1";
         column1.innerHTML = "<p><b>Solve equation in two variables...</b></p><p><b>Choose OKVED for a coffee shop...</b></p>";
         
         var column2 = document.createElement("div");
-        column2.className = "chat-help-blocks-container-column";
+        column2.className = "chat-help-blocks-container-column-2";
         column2.innerHTML = "<p><b>All Newton's laws...</b></p><p><b>Build a demand schedule...</b></p>";
         
         // Добавляем элементы в DOM

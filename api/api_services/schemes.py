@@ -37,11 +37,12 @@ class GetMessagesDataBase(BaseModel):
     
 
 class LoginRequestDTO(BaseModel):
-    login: str = Field(..., description='user\'s username or email')
+    gmail: str = Field(..., description='user\'s email')
     password: str = Field(..., description='user\'s password without hash')
 
 class SingupRequestDTO(BaseModel):
-    login: str = Field(..., description='user\'s username or email')
+    login: str = Field(..., description='user\'s username')
+    gmail: str = Field(..., description='user\'s email')
     password: str = Field(..., description='user\'s password without hash')
     teacher_student_flag: int = Field(..., description='teacher or student flag')
 

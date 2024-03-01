@@ -29,14 +29,14 @@ function apiRequest(method, url, headers, data = null, callback) {
     }
 }
 
-const searchAuthorizationButtonImg = document.getElementById('authorizationButton-img');
+const searchAuthorizationButtonImg = document.getElementById('loginButton');
 
 searchAuthorizationButtonImg.addEventListener('click', function() {
     // Ваш код для выполнения действия при нажатии на изображение
     
-    const inputLogin = document.getElementById('input-login').value.trim();
+    const inputGmail = document.getElementById('input-login').value.trim();
     const inputPassword = document.getElementById('input-password').value.trim();
-    console.log(`${inputLogin} ${inputPassword}`);
+    console.log(`${inputGmail} ${inputPassword}`);
 
     // URL адрес вашего API
     const url = 'http://127.0.0.1:80/api/login';
@@ -46,12 +46,12 @@ searchAuthorizationButtonImg.addEventListener('click', function() {
         'Content-Type': 'application/json',
     };
     const data = {
-        'login': inputLogin,
+        'gmail': inputGmail,
         'password': inputPassword,
     };
     apiRequest("POST", url, headers, data, function(jsonResponse){
         if (jsonResponse['status'] == true){
-            // user.login = inputLogin;
+            // user.login = inputGmail;
             // console.log(jsonResponse["message"]);
             window.location.href = jsonResponse["message"];
         }
