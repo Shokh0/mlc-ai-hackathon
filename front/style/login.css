@@ -17,7 +17,8 @@
     position: absolute;
     /* margin: auto; */
     margin-top: calc(calc(1vw + 1vh) * -16); /* -42vh; */
-    font-weight: 800;
+    /* font-weight: 800; */
+    font-family: roboto-medium;
     font-size: calc(calc(1vw + 1vh) * 2); /* 2.5vw; */
 }
 
@@ -41,7 +42,8 @@
     margin: auto;
     margin-left: 0px;
     margin-right: 0px;
-    font-weight: 600;
+    /* font-weight: 600; */
+    font-family: roboto-regular;
     font-size: calc(calc(1vw + 1vh) * .8);
     
 }
@@ -82,7 +84,8 @@
     margin: auto;
     margin-left: 0px;
     margin-right: 0px;
-    font-weight: 600;
+    /* font-weight: 600; */
+    font-family: roboto-regular;
     font-size: calc(calc(1vw + 1vh) * .8);
     
 }

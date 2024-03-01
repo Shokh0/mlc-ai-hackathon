@@ -386,7 +386,7 @@ function enterData () {
         };
         
         if (user.topic_id == null) {
-            const topicTitle = safeSubstring(enteredText, 16);
+            const topicTitle = safeSubstring(enteredText, 12);
             const topic_url = 'http://127.0.0.1:80/api/addTopic';
             
             const headers = {
