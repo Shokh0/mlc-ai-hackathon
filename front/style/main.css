@@ -58,49 +58,178 @@ html, body {
 }
 
 .auth-form-container {
-    width: 100%; /* Ширина контейнера */
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-style: solid;
+    margin: auto;
+    width:  calc(calc(1vw + 1vh) * 18); /* 27% Ширина контейнера */
+    height: calc(calc(1vw + 1vh) * 22); /* 60%; */
+    border-radius: 24px;
+    border-width: 2px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    /* background-color: aqua; */
 }
 
 
-.authorizationFrom {
+.auth-form-login-here {
     position: absolute;
-    margin: auto;
-    width: 34vw;
-    top: 5.5vw;
+    /* margin: auto; */
+    margin-top: calc(calc(1vw + 1vh) * -16); /* -42vh; */
+    font-weight: 800;
+    font-size: calc(calc(1vw + 1vh) * 2); /* 2.5vw; */
 }
 
-.authorizationButton {
+.input-email-container {
+    display: flex;
     position: absolute;
+    margin-top: calc(calc(1vw + 1vh) * -5); /* -14vh; */
+    height: calc(calc(1vw + 1vh) * 2); 
+    width: calc(calc(1vw + 1vh) * 11.5);
+    border-style: solid;
+    /* border: none; */
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 1px; 
+    border-width: .5px;
+}
+
+.input-email-container>span {
+    position: relative; 
     margin: auto;
-	width: 27vw;
-    top: 26.5vw;
-    transition: transform 500ms ease;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-weight: 600;
+    font-size: calc(calc(1vw + 1vh) * .8);
+    
+}
+.input-email-container>input {
+    position: relative; 
+    margin: auto;
+    width: calc(calc(1vw + 1vh) * 7.5);
+    height: calc(calc(1vw + 1vh) * .8); 
+    margin-left: .6vw;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+}
+
+.input-email-container>img {
+    position: relative; 
+    margin: auto;
+    margin-right: 0px;
+    width: calc(calc(1vw + 1vh) * .8); 
+    
+}
+
+.input-password-container {
+    display: flex;
+    position: absolute;
+    margin-top: 8vh;
+    height: calc(calc(1vw + 1vh) * 2); 
+    width: calc(calc(1vw + 1vh) * 11.5);
+    border-style: solid;
+    /* border: none; */
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 1px;
+    border-width: .5px;
+}
+
+.input-password-container>span {
+    position: relative; 
+    margin: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-weight: 600;
+    font-size: calc(calc(1vw + 1vh) * .8);
+    
+}
+.input-password-container>input {
+    position: relative; 
+    margin: auto;
+    width: calc(calc(1vw + 1vh) * 6.2);
+    height: calc(calc(1vw + 1vh) * .8); 
+    margin-left: .6vw;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: none;
+}
+
+.input-password-container>img {
+    position: relative; 
+    margin: auto;
+    margin-right: .1vw;
+    width: calc(calc(1vw + 1vh) * .8); 
+}
+
+.forgor-password-container {
+    position: absolute;
+    display: flex;
+    justify-content: right;
+	height: calc(calc(1vw + 1vh) * 2); 
+    width: calc(calc(1vw + 1vh) * 11.5);
+    top: 59vh;
+}
+
+.forgor-password-container>span {
+    font-weight: 600;
+    font-size: calc(calc(1vw + 1vh) * .6);
+}
+
+.login-button-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	height: calc(calc(1vw + 1vh) * 2); 
+    width: calc(calc(1vw + 1vh) * 11.5);
+    top: 65vh;
+    border-style: solid;
+    border-color: #4b4b4b;
+    border-width: 1px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 2px 4px gray;
+    transition: transform 120ms ease;
 }   
 
-.authorizationFrom-input-login {
-    position: absolute;
-    top: 20.1vw;
-    background-color: rgba(255, 255, 255, 0);
-    border-style: none;
-    width: 12vw;
+.login-button-container>span {
+    text-decoration: none;
+    color: black;   
+    font-weight: 500;
+    font-size: calc(calc(1vw + 1vh) * .8);
 }
 
-.authorizationFrom-input-password {
-    position: absolute;
-    top: 26vw;
-    left: 46vw;
-    background-color: rgba(255, 255, 255, 0);
-    border-style: none;
-    width: 12vw;
+.login-button-container:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
+    transform: scale(1.01);
 }
 
-.authorizationButton:hover {
-    transform: scale(1.05);
+.dont-have-acc-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+	height: calc(calc(1vw + 1vh) * 2); 
+    width: calc(calc(1vw + 1vh) * 11.5);
+    top: 74.5vh;
 }
+
+.dont-have-acc-container>span {
+    font-size: calc(calc(1vw + 1vh) * .65);
+    font-weight: 400;
+}
+
+.dont-have-acc-container>span>span {
+    font-weight: 600;
+}
+
+
+
+/* Ai Chat*/
+
 
 .left-bar {
     position: static;
