@@ -1,4 +1,4 @@
-// import { config } from 'static/script/config.js';
+import { config } from './config.js';
 
 const local_url = 'http://127.0.0.1:80';
 const external_url = 'http://26.142.248.33:80';
