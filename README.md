@@ -9,4 +9,4 @@
 Install pytorch_model.bin into model directory
 
 ### Launch project
-<code>uvicorn main:app --reload --host 0.0.0.0 --port 80</code>
+<code>python main.py</code>

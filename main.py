@@ -8,6 +8,9 @@ from fastapi.templating import Jinja2Templates
 from services import Services
 from schemes import *
 
+import uvicorn
+
+
 """This module includes main method for working with AI assistant model."""
 
 
@@ -94,3 +97,7 @@ async def getTopics(items: GetTopicsRequestDTO, request: Request) -> JSONRespons
 @app.post('/api/delTopic')
 async def delTopic(items: DelTopicRequestDTO, request: Request) -> JSONResponse:
     return services.del_topic(items, request)
+
+
+if __name__ == '__main__':
+    uvicorn.run("main:app", host='127.0.0.1', port=80, reload=True)
