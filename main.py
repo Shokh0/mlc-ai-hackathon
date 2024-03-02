@@ -1,22 +1,21 @@
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-from flask import request
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import Union
 from starlette.responses import JSONResponse
 from api.api_services.schemes import *
 from api.database_handler import *
 from api.utils.usefull_func import hashPassword
+
 from inference.model_wrapper import AiAssistant
+
 import copy
 import sqlite3
 
 """This module includes main method for working with AI assistant model."""
-
-
-ai_assitant = AiAssistant()
-chat = ai_assitant.create_chat()
 
 class LocalStoreg:
 
@@ -50,6 +49,9 @@ class LocalStoreg:
         return name
 
 
+ai_assitant = AiAssistant()
+chat = ai_assitant.create_chat()
+
 app = FastAPI(
     title="Inference API for Lamini-77M",
     description="A simple API that use MBZUAI/LaMini-Flan-T5-77M as a chatbot",
@@ -64,12 +66,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="front/static"), name="static")
+
+templates = Jinja2Templates(directory="front/template")
+
 db = DataBase()
 ls = LocalStoreg()
 
-@app.get("/")
-def read_root() -> JSONResponse:
-    return JSONResponse({"message": "Hello, World"})
+@app.get("/", response_class=HTMLResponse)
+def indext(request: Request) -> JSONResponse:
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/login", response_class=HTMLResponse)
+def login(request: Request) -> JSONResponse:
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/edu-chat", response_class=HTMLResponse)
+def aiChat(request: Request) -> JSONResponse:
+    return templates.TemplateResponse("ai-chat.html", {"request": request})
 
 @app.get('/d')
 async def readDocsApi() -> RedirectResponse: 
@@ -120,7 +134,7 @@ async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
     db.addUser(login, hash_password, teacher_student_flag)
     status: bool = True
     # return JSONResponse({'status': status, 'message': 'Пользователь добавлен'})
-    return JSONResponse({'status': status, 'message': 'http://127.0.0.1:5500/front/ai-chat.html'})
+    return JSONResponse({'status': status, 'message': 'http://127.0.0.1:80/front/edu-chat'})
 
 @app.post('/api/login')
 async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
@@ -147,7 +161,7 @@ async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
         host = request.headers.get('host')
         ls.updateUserId(host, login_id)
         status: bool = True
-        return JSONResponse({'status': status, 'message': 'http://127.0.0.1:5500/front/ai-chat.html', 'login': login_id})
+        return JSONResponse({'status': status, 'message': 'http://127.0.0.1:80/edu-chat', 'login': login_id})
     status: bool = False
     return JSONResponse({'status': status, 'message': 'Что-то пошло не так'})
 
@@ -206,11 +220,3 @@ async def getTopics(items: DelTopicDataBase, request: Request) -> JSONResponse:
     status: bool = True
     return JSONResponse({'status': status})
 
-
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int, q: str = None):
-#     return {"item_id": item_id, "q": q}
-
-# @app.post("/items/")
-# def create_item(item: dict):
-#     return item

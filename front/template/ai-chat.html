@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eduChat</title>
-    <link rel="stylesheet" href="style\reset.css">
-    <link rel="stylesheet" href="style\main.css">
-    <link rel="stylesheet" href="style\chat.css">
+    <link rel="stylesheet" href="static/style/reset.css">
+    <link rel="stylesheet" href="static/style/main.css">
+    <link rel="stylesheet" href="static/style/chat.css">
 </head>
 <body>
     <div class="base-window-container">
@@ -15,9 +15,9 @@
             <!-- <div class="gradient-topic-bar"></div> -->
             <div id="new-chat" class="chat-header-logo-container">
                 <div class="chat-header-logo-container-wrapper">
-                    <img class="chat-header-logo"      src="media\svg\chat\logo.svg"       alt="logo">
-                    <img class="chat-header-logo-text" src="media\svg\chat\newChatImg.svg" alt="new chat">
-                    <img class="chat-header-writeicon" src="media\svg\chat\writeIcon.svg"  alt="write chat">
+                    <img class="chat-header-logo"      src="static/media/svg/chat/logo.svg"       alt="logo">
+                    <img class="chat-header-logo-text" src="static/media/svg/chat/newChatImg.svg" alt="new chat">
+                    <img class="chat-header-writeicon" src="static/media/svg/chat/writeIcon.svg"  alt="write chat">
                 </div>
             </div>
             <div id="topic-list" class="chat-topics-bar-list">
@@ -25,18 +25,18 @@
             <div id="userContainer" class="user-name-container"></div>
         </div>
         <div id="chat-space" class="chat-space">
-            <img class="chat-header-edu-chat" src="media\svg\chat\EduChat.svg" alt="chat header">
+            <img class="chat-header-edu-chat" src="static/media/svg/chat/EduChat.svg" alt="chat header">
+            
             <div id="message-list" class="message-chat-ai-container"></div>
 
             <div id="textareaWrapper" class="input-chat-ai-container">
                 <textarea id="myTextarea" class="input-chat-ai-text" placeholder="Ask EduChat ..."></textarea>
-                <img id="inputIcon" class="input-chat-ai-icon" src="media\svg\chat\arrowIcon.svg" alt="arrow icon">
+                <img id="inputIcon" class="input-chat-ai-icon" src="static/media/svg/chat/arrowIcon.svg" alt="arrow icon">
             </div>
-        
         </div>
     </div>
-    <script src="script/script.js"></script>
-    <script src="script/autosize.js"></script>
+    <script src="static/script/script.js"></script>
+    <script src="static/script/autosize.js"></script>
     <script>
 		autosize(document.querySelectorAll('textarea'));
 	</script>

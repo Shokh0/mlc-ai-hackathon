@@ -48,7 +48,9 @@
     margin: auto;
     margin-right: .8vw;
     font-family: roboto-medium;
+    font-size: calc(calc(1vw + 1vh) * .8);
 }
+
 
 .login-button-container>span>a {
     text-decoration: none;

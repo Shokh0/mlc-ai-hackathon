@@ -88,7 +88,7 @@ function getUserIdAndTopicId(func = null){
         const userNameContainer = document.getElementById("userContainer");
         const img = document.createElement("img");
         const span = document.createElement("span");
-        img.src = "media\\png\\blank-user.png";
+        img.src = "static/media/png/blank-user.png";
         img.className = "user-name-container-img";
         span.textContent = user.login; 
         span.className = "user-name-container-login";
@@ -114,9 +114,20 @@ function scrollContainerDown() {
 function getTopics(){
     console.log(document.title)
 
+
+    // предварительно удаляем все топики
+    // Находим элемент, у которого нужно удалить все дочерние элементы
+    var parentElement = document.getElementById("topic-list");
+    
+    // Удаляем все дочерние элементы
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
+
     if (user.topic_id != null){
         getMessages(user.topic_id);
     }     
+    
     const url = 'http://127.0.0.1:80/api/getTopics';
 
     const headers = {
@@ -142,7 +153,7 @@ function getTopics(){
             div.id = topic[0];
             div.className = "topic-name-container";
             img.id = topic[0];
-            img.src = "media\\png\\icon-trash.png";
+            img.src = "static/media/png/icon-trash.png";
             img.className = "icon-dt";
             span.id = topic[0];
             span.className = 'topicName';
@@ -204,6 +215,7 @@ function delTopic(topic_id) {
     apiRequest("POST", url, headers, data, function (jsonResponse) {
         user.topic_id = null;
         console.log('user.topic_id: ', user.topic_id, jsonResponse["status"]);
+        getTopics();
     });
 }
 
@@ -268,7 +280,7 @@ function addFewElement() {
         var imageElement = document.createElement("img");
         imageElement.id = "welcomTextToDelete";
         imageElement.className = "chat-header-welcome-text";
-        imageElement.src = "media\\svg\\chat\\header.svg";
+        imageElement.src = "static/media/svg/chat/header.svg";
         imageElement.alt = "chat header";
         
         // Создаем элементы
@@ -426,6 +438,7 @@ function enterData () {
                     console.log(jsonResponse['message']);
                     apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
                         console.log(jsonResponse['message']);
+                        getTopics();
                     });
                 });
             });

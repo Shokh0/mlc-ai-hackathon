@@ -7,8 +7,8 @@ import os
 def create_database():
 
     try:
-        open('../db.sqlite3', 'w')
-        with sqlite3.connect('../db.sqlite3') as c:
+        open(DATABASE_PATH, 'w')
+        with sqlite3.connect(DATABASE_PATH) as c:
         
             c.execute('''CREATE TABLE IF NOT EXISTS users (
                             id INTEGER PRIMARY KEY,
