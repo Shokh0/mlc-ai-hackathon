@@ -1,5 +1,5 @@
 from .utils.singleton import Singleton
-from .utils.config import DATABASE_PATH
+from .utils.config import config
 import sqlite3
 
 
@@ -7,7 +7,7 @@ class DataBase(Singleton):
     
     def init(self):
         super().__init__()
-        self.db_path = DATABASE_PATH
+        self.db_path = config.DATABASE_PATH
 
     # users
     def addUser(self, login: str, gmail: str, hash_password: str, role: int):

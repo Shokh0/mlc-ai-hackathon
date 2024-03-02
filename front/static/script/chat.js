@@ -1,4 +1,9 @@
 // script.js
+// import { config } from 'static/script/config.js';
+
+const config = {
+    base_url: 'http://127.0.0.1:80', // 'http://26.142.248.33:80'
+}
 
 // Данные для работы с api
 var user = {
@@ -64,7 +69,7 @@ function safeSubstring(str, endValue) {
 
 // Получение user id и topic id из сервера
 function getUserIdAndTopicId(func = null){
-    const url = 'http://127.0.0.1:80/api/getUserIdAndTopicId';
+    const url = `${config.base_url}/api/getUserIdAndTopicId`;
             
     const headers = {
         'accept': 'application/json',
@@ -82,8 +87,7 @@ function getUserIdAndTopicId(func = null){
         user.login_id = login_id;
         user.topic_id = topic_id;
         user.login = login;
-        console.log('login id: ', user.login_id);
-        console.log('topic id: ', user.topic_id);
+        
 
         const userNameContainer = document.getElementById("userContainer");
         const img = document.createElement("img");
@@ -112,7 +116,7 @@ function scrollContainerDown() {
 
 // Получение всех топиков юзера
 function getTopics(){
-    console.log(document.title)
+    console.log(document.title);
 
 
     // предварительно удаляем все топики
@@ -128,22 +132,23 @@ function getTopics(){
         getMessages(user.topic_id);
     }     
     
-    const url = 'http://127.0.0.1:80/api/getTopics';
+    const url = `${config.base_url}/api/getTopics`;
 
     const headers = {
         'accept': 'application/json',
         'Content-Type': 'application/json',
     };
-    console.log('login_id: ', user.login_id)
+
     const data = {
         'login_id': user.login_id, // user.login,
     };
     
     apiRequest("POST", url, headers, data, function(jsonResponse) {
-        console.log('jsonResponse 2', jsonResponse); // выводим результат в консоль
+
         const topics = jsonResponse['topics'];
         const topicList = document.getElementById("topic-list");
         topics.reverse();
+
         for (let topic of topics) {
             // console.log(topic);
             const div = document.createElement("div");
@@ -172,10 +177,6 @@ function getTopics(){
                 img.style.opacity = 0;
             });
             img.addEventListener('click', function() {
-                // console.log('Вы нажали на абзац.', element);
-                console.log('Вы нажали на абзац c id', img.id);
-                // window.location.href = "http://127.0.0.1:5500/front/ai-chat.html";
-                // user.topic_id = null;
                 delTopic(img.id);
             });
         }   
@@ -188,7 +189,7 @@ function getTopics(){
         for (let element of elements) {
             element.addEventListener('click', function() {
                 // console.log('Вы нажали на абзац.', element);
-                console.log('Вы нажали на абзац c id', element.id);
+                // console.log('Вы нажали на абзац c id', element.id);
                 // window.location.href = "http://127.0.0.1:5500/front/ai-chat.html";
                 user.topic_id = element.id;
                 getMessages(element.id);
@@ -199,7 +200,7 @@ function getTopics(){
 
 
 function delTopic(topic_id) {
-    const url = 'http://127.0.0.1:80/api/delTopic';
+    const url = `${config.base_url}/api/delTopic`;
         
     const headers = {
         'accept': 'application/json',
@@ -210,18 +211,18 @@ function delTopic(topic_id) {
     };   
     // console.log(`.chat-topics-bar-list>#${topic_id}`)
     const elementToRemove = document.getElementById(topic_id)
-    console.log(elementToRemove)
+    // console.log(elementToRemove)
     elementToRemove.parentNode.removeChild(elementToRemove)
     apiRequest("POST", url, headers, data, function (jsonResponse) {
         user.topic_id = null;
-        console.log('user.topic_id: ', user.topic_id, jsonResponse["status"]);
-        getTopics();
+        // delFewElement();
+        addFewElement();
     });
 }
 
 // Получение всех сообщения связанный с топиком
 function getMessages(topic_id) {
-    const url = 'http://127.0.0.1:80/api/getMessage';
+    const url = `${config.base_url}/api/getMessage`;
         
     const headers = {
         'accept': 'application/json',
@@ -231,16 +232,20 @@ function getMessages(topic_id) {
         'user_id': user.login_id, 
         'topic_id': topic_id,
     };  
-    console.log('getMessages login_id: ', user.login_id)
-    console.log('getMessages topic_id: ', topic_id)
+    // console.log('getMessages login_id: ', user.login_id)
+    // console.log('getMessages topic_id: ', topic_id)
 
     apiRequest("POST", url, headers, data, function (jsonResponse){
-        console.log('messages: ', jsonResponse)
+        // console.log('messages: ', jsonResponse)
         const messages = jsonResponse['messages'];
         const messageList = document.getElementById("message-list");
 
-        delFewElement();
-     
+        if (user.topic_id == null) {
+            addFewElement();
+        } else {
+            delFewElement();
+        }
+        
         try{
             delAllMessages();
         } catch (error) {
@@ -270,11 +275,11 @@ function getMessages(topic_id) {
 }
 
 
-// Удаение картинок для нового чата
+// Добавление картинок для нового чата
 function addFewElement() {
-
+    
     var welcomTextToDelete = document.getElementById("welcomTextToDelete");
-        
+    // console.log('welcomTextToDelete:', welcomTextToDelete);
     if  (welcomTextToDelete == null){
         // Создаем элементы
         var imageElement = document.createElement("img");
@@ -319,12 +324,12 @@ function delAllMessages() {
     }
 }
 
-// Добавление картинок для нового чата
+// Удаение картинок для нового чата
 function delFewElement() {
     
     var welcomTextToDelete = document.getElementById("welcomTextToDelete");
     var helpBlockToDelete = document.getElementById("helpBlockToDelete");
-
+    
     if (welcomTextToDelete != null) {
         welcomTextToDelete.parentNode.removeChild(welcomTextToDelete);
         helpBlockToDelete.parentNode.removeChild(helpBlockToDelete);
@@ -343,13 +348,13 @@ function resizeTextarea() {
 // Обработка полученого сообщения
 function enterData () {
     const enteredText = textarea.value.trim(); // Получаем введенный текст и удаляем лишние пробелы
-    console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
+    // console.log("Введенный текст:", enteredText); // Выводим введенный текст в консоль (можно изменить на другое действие)
     if (enteredText == "") {
         return null;
     }
     delFewElement();
     textarea.value = ""; // Очищаем textarea\
-    const url = 'http://127.0.0.1:80/api/lamini';
+    const url = `${config.base_url}/api/lamini`;
     
     const headers = {
         'accept': 'application/json',
@@ -379,7 +384,7 @@ function enterData () {
         messageList.appendChild(aiPre);
         scrollContainerDown();
 
-        const message_url = 'http://127.0.0.1:80/api/addMessage';
+        const message_url = `${config.base_url}/api/addMessage`;
         
         const headers = {
             'accept': 'application/json',
@@ -399,7 +404,7 @@ function enterData () {
         
         if (user.topic_id == null) {
             const topicTitle = safeSubstring(enteredText, 12);
-            const topic_url = 'http://127.0.0.1:80/api/addTopic';
+            const topic_url = `${config.base_url}/api/addTopic`;
             
             const headers = {
                 'accept': 'application/json',
@@ -409,16 +414,16 @@ function enterData () {
                 'user_id': user.login_id, 
                 'title': topicTitle,
             };    
-            console.log('topicTitle: ', topicTitle);
-            console.log('user.login_id: ', user.login_id);
+            // console.log('topicTitle: ', topicTitle);
+            // console.log('user.login_id: ', user.login_id);
             
             // Отправляем запрос на добавление топика
             apiRequest("POST", topic_url, headers, data, function(jsonResponse) {
                 user.topic_id = jsonResponse['topic_id'];
-                console.log('user.topic_id: ', user.topic_id);
+                // console.log('user.topic_id: ', user.topic_id);
                 // alert('addTopic response: ' + user.topic_id);
                 
-                const message_url = 'http://127.0.0.1:80/api/addMessage';
+                const message_url = `${config.base_url}/api/addMessage`;
                 const headers = {
                     'accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -435,9 +440,7 @@ function enterData () {
                 };  
                 // Отправляем запросы на добавление сообщений пользователя и AI
                 apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
-                    console.log(jsonResponse['message']);
                     apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
-                        console.log(jsonResponse['message']);
                         getTopics();
                     });
                 });
@@ -445,9 +448,7 @@ function enterData () {
         } else {
             // Если у пользователя уже есть топик, просто отправляем сообщения  
             apiRequest("POST", message_url, headers, user_data, function(jsonResponse) {
-                console.log(jsonResponse['message']);
                 apiRequest("POST", message_url, headers, ai_data, function(jsonResponse) {
-                    console.log(jsonResponse['message']);
                 });
             });
         }
@@ -470,7 +471,7 @@ function getTextareaData(event) {
 
 // Создание нового чата
 function getNewChat() {
-    const url = 'http://127.0.0.1:80/api/newChat';
+    const url = `${config.base_url}/api/newChat`;
     
     const headers = {
         'accept': 'application/json',
@@ -481,7 +482,7 @@ function getNewChat() {
     };
     
     apiRequest("POST", url, headers, data, function(jsonResponse){
-        console.log(jsonResponse);
+        // console.log(jsonResponse);
         user.topic_id = null;
         delAllMessages();
         addFewElement();

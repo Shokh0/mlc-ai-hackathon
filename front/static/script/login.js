@@ -1,5 +1,8 @@
+// import { config } from 'static/script/config.js';
 
-
+const config = {
+    base_url: 'http://127.0.0.1:80', // 'http://26.142.248.33:80'
+}
 
 function apiRequest(method, url, headers, data = null, callback) {
         
@@ -39,7 +42,7 @@ searchAuthorizationButtonImg.addEventListener('click', function() {
     console.log(`${inputGmail} ${inputPassword}`);
 
     // URL адрес вашего API
-    const url = 'http://127.0.0.1:80/api/login';
+    const url = `${config.base_url}/api/login`;
 
     const headers = {
         'accept': 'application/json',
@@ -52,8 +55,8 @@ searchAuthorizationButtonImg.addEventListener('click', function() {
     apiRequest("POST", url, headers, data, function(jsonResponse){
         if (jsonResponse['status'] == true){
             // user.login = inputGmail;
-            // console.log(jsonResponse["message"]);
-            window.location.href = jsonResponse["message"];
+            // console.log(jsonResponse["url"]);
+            window.location.href = jsonResponse["url"];
         }
     })
 });

@@ -1,56 +1,15 @@
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse, HTMLResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
-from typing import Union
 from starlette.responses import JSONResponse
-from api.api_services.schemes import *
-from api.database_handler import *
-from api.utils.usefull_func import hashPassword
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-from inference.model_wrapper import AiAssistant
-
-import copy
-import sqlite3
+from services import Services
+from schemes import *
 
 """This module includes main method for working with AI assistant model."""
 
-class LocalStoreg:
-
-    def __init__(self):
-        self.user_id = {}
-        self.topic_id = {}
-        self.name = {}
-
-    def updateUserId(self, host, user_id):
-        self.user_id.update({host: user_id})    
-    
-    def getUserId(self, host):
-        user_id = self.user_id.get(host, None)
-        print('user_id: ', user_id)
-        return user_id
-    
-    def updateTopicId(self, user_id, topic_id):
-        self.user_id.update({user_id: topic_id})
-    
-    def getTopicId(self, user_id):
-        topic_id = self.user_id.get(user_id, None)
-        print('topic_id: ', topic_id)
-        return topic_id
-    
-    def updateName(self, user_id, name):
-        self.name.update({user_id: name})
-    
-    def getName(self, user_id):
-        name = self.name.get(user_id, None)
-        print('topic_id: ', name)
-        return name
-
-
-ai_assitant = AiAssistant()
-chat = ai_assitant.create_chat()
 
 app = FastAPI(
     title="Inference API for Lamini-77M",
@@ -67,12 +26,12 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory="front/static"), name="static")
-
 templates = Jinja2Templates(directory="front/template")
+services = Services()
 
-db = DataBase()
-ls = LocalStoreg()
 
+# Application
+# GET
 @app.get("/", response_class=HTMLResponse)
 def indext(request: Request) -> JSONResponse:
     return templates.TemplateResponse("index.html", {"request": request})
@@ -83,140 +42,55 @@ def login(request: Request) -> JSONResponse:
 
 @app.get("/edu-chat", response_class=HTMLResponse)
 def aiChat(request: Request) -> JSONResponse:
-    return templates.TemplateResponse("ai-chat.html", {"request": request})
+    return templates.TemplateResponse("chat.html", {"request": request})
 
-@app.get('/d')
+# Api
+# GET
+@app.get('/api/d')
 async def readDocsApi() -> RedirectResponse: 
     return RedirectResponse(f"/docs")
 
-@app.get('/r')
+@app.get('/api/r')
 async def readRedocApi() -> RedirectResponse: 
     return RedirectResponse(f"/redoc")
 
+# POST
 @app.post('/api/lamini')
-async def lamini(question : LaminiRequest):
-    res = chat.run(question.question)
-    result = copy.deepcopy(res)
-    status = True
-    return JSONResponse({'status': status, 'message': result})
+async def lamini(question : LaminiRequestDTO):
+    return services.get_lamini(question)
 
 @app.post('/api/newChat')
-async def getNewChat(items: NeweChatData, request: Request) -> JSONResponse:
-    host = request.headers.get('host')
-    user_id = ls.getUserId(host)
-    ls.updateTopicId(user_id, None)
-    status = True 
-    return JSONResponse({'status': status})
+async def getNewChat(items: NewChatDataRequestDTO, request: Request) -> JSONResponse:
+    return services.get_new_chat(items, request)
 
 @app.post('/api/getUserIdAndTopicId')
-async def getUserIdAndTopicId(items: UserIdAndTopicIdData, request: Request):
-    host = request.headers.get('host')
-    user_id = ls.getUserId(host)
-    topic_id = ls.getTopicId(user_id)
-    name = ls.getName(user_id)
-    status = True
-    return JSONResponse({'status': status, 'user_id': user_id, 'topic_id': topic_id, "login": name})
+async def getUserIdAndTopicId(items: UserIdAndTopicIdDataRequestDTO, request: Request):
+    return services.get_user_id_and_topic_id(items, request)
 
 @app.post('/api/singup')
 async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
-    host = request.headers.get('host')
-    login: str = items.login
-    gmail: str = items.gmail
-    password: str = items.password
-    teacher_student_flag: int = items.teacher_student_flag
-    all_gmails = db.getAllUsersGmail()
-    
-    if gmail in all_gmails:
-        status: bool = False
-        return JSONResponse({'status': status, 'message': 'Пользователь с таким gmail уже есть'})
-     
-    hash_password = hashPassword(password)
-    db.addUser(login, hash_password, teacher_student_flag)
-    status: bool = True
-    # return JSONResponse({'status': status, 'message': 'Пользователь добавлен'})
-    return JSONResponse({'status': status, 'message': 'http://127.0.0.1:80/front/edu-chat'})
+    return services.get_singup(items, request)
 
 @app.post('/api/login')
 async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
-    gmail: str = items.gmail
-    password: str = items.password
-    all_gmails = db.getAllUsersGmail()
-    if all_gmails != None:
-        all_gmails = list(map(lambda x: x[0], all_gmails))
-
-    if gmail not in all_gmails:
-        status: bool = False
-        return JSONResponse({'status': status, 'message': 'Пользователя с таким gmail нет'})
-    new_hash_password = hashPassword(password)
-    curent_hash_password = db.getPasswordFromLogin(gmail)
-    
-    if curent_hash_password != None:
-        if new_hash_password != curent_hash_password[0]: 
-            status: bool = False
-            return JSONResponse({'status': status, 'message': 'Пароль не верный'})
-        print(request.headers)
-        user_name = db.getUserNameFromGmail(gmail)
-        login_id = db.getUser(gmail)[0]
-        ls.updateName(login_id, user_name)
-        host = request.headers.get('host')
-        ls.updateUserId(host, login_id)
-        status: bool = True
-        return JSONResponse({'status': status, 'message': 'http://127.0.0.1:80/edu-chat', 'login': login_id})
-    status: bool = False
-    return JSONResponse({'status': status, 'message': 'Что-то пошло не так'})
+    return services.get_login(items, request)
 
 @app.post('/api/addMessage')
-async def addMessage(items: MessagesDataBase, request: Request) -> JSONResponse:
-    topic_id = items.topic_id
-    content = items.content
-    is_ai = items.is_ai
-    host = request.headers.get('host')
-    user_id = ls.getUserId(host)
-    ls.updateTopicId(user_id, topic_id)
-    print(topic_id, content, is_ai)
-    db.addMessage(topic_id, user_id, content, is_ai)
-    status: bool = True
-    return JSONResponse({'status': status, 'message': 'Сообщение добавлено'})
+async def addMessage(items: AddMessagesRequestDTO, request: Request) -> JSONResponse:
+    return services.add_new_message(items, request)
 
 @app.post('/api/getMessage')
-async def getMessage(items: GetMessagesDataBase, request: Request) -> JSONResponse:
-    topic_id: int = items.topic_id
-    user_id: int = items.user_id
-    print(topic_id, user_id)
-    messages = db.getMessagesFromTopicIdAndUserId(topic_id, user_id)
-    status: bool = True
-    return JSONResponse({'status': status, 'messages': messages})
+async def getMessage(items: GetMessagesRequestDTO, request: Request) -> JSONResponse:
+    return services.get_messages(items, request)
 
 @app.post('/api/addTopic')
-async def addTopic(items: TopicsDataBase, request: Request) -> JSONResponse:
-    user_id = items.user_id
-    title = items.title
-    date = datetime.now().strftime('%d.%m.%Y %H:%M')
-    row = db.addTopic(user_id, title, date)
-    topic_id = row[0]
-    host = request.headers.get('host')
-    user_id = ls.getUserId(host)
-    ls.updateTopicId(user_id, topic_id)
-    print('topic_id', row[0])
-    status: bool = True
-    return JSONResponse({'status': status, 'topic_id': row[0], 'message': 'Тема добавлена'})
+async def addTopic(items: AddTopicRequestDTO, request: Request) -> JSONResponse:
+    return services.add_topic(items, request)
 
 @app.post('/api/getTopics')
-async def getTopics(items: GetTopicsDataBase, request: Request) -> JSONResponse:
-    login_id = items.login_id
-    with sqlite3.connect('api/db.sqlite3') as c:
-        topics = c.execute(f"""SELECT * FROM topics WHERE user_id = '{login_id}'""").fetchall()
-    # print(topics)
-    status: bool = True
-    return JSONResponse({'status': status, 'topics': topics})
+async def getTopics(items: GetTopicsRequestDTO, request: Request) -> JSONResponse:
+    return services.get_topics(items, request)
 
 @app.post('/api/delTopic')
-async def getTopics(items: DelTopicDataBase, request: Request) -> JSONResponse:
-    topic_id = items.topic_id
-    with sqlite3.connect('api/db.sqlite3') as c:
-        c.execute(f"""DELETE FROM messages WHERE topic_id = '{topic_id}'""")
-        c.execute(f"""DELETE FROM topics WHERE id = '{topic_id}'""")
-    # print(topics)
-    status: bool = True
-    return JSONResponse({'status': status})
-
+async def delTopic(items: DelTopicRequestDTO, request: Request) -> JSONResponse:
+    return services.del_topic(items, request)

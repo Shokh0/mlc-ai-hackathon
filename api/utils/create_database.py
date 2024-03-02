@@ -1,4 +1,4 @@
-from config import DATABASE_PATH
+from config import config
 import sqlite3
 import os
 
@@ -7,8 +7,8 @@ import os
 def create_database():
 
     try:
-        open(DATABASE_PATH, 'w')
-        with sqlite3.connect(DATABASE_PATH) as c:
+        open(config.DATABASE_PATH, 'w')
+        with sqlite3.connect(config.DATABASE_PATH) as c:
         
             c.execute('''CREATE TABLE IF NOT EXISTS users (
                             id INTEGER PRIMARY KEY,

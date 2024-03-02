@@ -147,10 +147,6 @@
     transition: transform 120ms ease;
 }
 
-/* .chat-topics-bar-list>div>img:active {
-    transform: scale(1.2);
-} */
-
 .user-name-container {
     position: absolute;
     display: flex;
@@ -162,6 +158,7 @@
     bottom: 5.8%;
     border-style: solid;
     border-radius: 6px;
+    cursor: pointer;
 }
 
 .user-name-container-img {
@@ -177,9 +174,9 @@
 .user-name-container-login {
     position: relative;
     margin: auto;
-    margin-left: 1.2vw;
+    margin-left: 1.4vw;
     font-weight: 100;
-    font-size: calc(calc(1vw + 1vh) * 1);
+    font-size: calc(calc(1vw + 1vh) * .8);
 }
 
 .user-name-container:hover {
@@ -187,7 +184,6 @@
     background: linear-gradient(to bottom, rgb(255, 255, 255, .3), rgba(179, 179, 179, 0.2));
 
 }
-
 
 .chat-space {
     position: relative ;
