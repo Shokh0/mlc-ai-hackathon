@@ -1,7 +1,10 @@
 // import { config } from 'static/script/config.js';
 
+const local_url = 'http://127.0.0.1:80';
+const external_url = 'http://26.142.248.33:80';
+
 const config = {
-    base_url: 'http://127.0.0.1:80', // 'http://26.142.248.33:80'
+    base_url: external_url,
 }
 
 function apiRequest(method, url, headers, data = null, callback) {
