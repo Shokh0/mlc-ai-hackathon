@@ -10,6 +10,7 @@ from schemes import *
 
 import uvicorn
 
+from api.utils.config import config
 
 """This module includes main method for working with AI assistant model."""
 
@@ -100,4 +101,4 @@ async def delTopic(items: DelTopicRequestDTO, request: Request) -> JSONResponse:
 
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host='127.0.0.1', port=80, reload=True)
+    uvicorn.run("main:app", host=config.external, port=config.port, reload=True)

@@ -1,12 +1,5 @@
 // script.js
-import { config } from './config.js';
-
-const local_url = 'http://127.0.0.1:80';
-const external_url = 'http://26.142.248.33:80';
-
-const config = {
-    base_url: local_url,
-}
+import { config } from './modules/config.js';
 
 // Данные для работы с api
 var user = {
@@ -51,7 +44,7 @@ function safeSubstring(str, endValue) {
 
     while (end > 0) {
         try {
-            res = str.substring(0, end); // Пытаемся создать срез
+            var res = str.substring(0, end); // Пытаемся создать срез
             if (res.length >= endValue) {
                 return res + "...";
             }
@@ -84,9 +77,10 @@ function getUserIdAndTopicId(func = null){
     }
 
     apiRequest("POST", url, headers, data, function (jsonResponse) {
-        login_id = jsonResponse['user_id'];
-        topic_id = jsonResponse['topic_id'];
-        login = jsonResponse['login'];
+        const login_id = jsonResponse['user_id'];
+        const topic_id = jsonResponse['topic_id'];
+        const login = jsonResponse['login'];
+    
         user.login_id = login_id;
         user.topic_id = topic_id;
         user.login = login;
@@ -218,7 +212,7 @@ function delTopic(topic_id) {
     elementToRemove.parentNode.removeChild(elementToRemove)
     apiRequest("POST", url, headers, data, function (jsonResponse) {
         user.topic_id = null;
-        // delFewElement();
+        delAllMessages();
         addFewElement();
     });
 }
