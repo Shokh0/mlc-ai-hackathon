@@ -101,4 +101,4 @@ async def delTopic(items: DelTopicRequestDTO, request: Request) -> JSONResponse:
 
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host=config.external, port=config.port, reload=True)
+    uvicorn.run("main:app", host=config.local, port=config.port, reload=True)
