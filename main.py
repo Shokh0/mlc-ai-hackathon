@@ -5,12 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from services import Services
-from schemes import *
+from api.services import Services
+from api.schemes import *
 
 import uvicorn
 
-from api.utils.config import config
+from back.utils.config import config
 
 """This module includes main method for working with AI assistant model."""
 

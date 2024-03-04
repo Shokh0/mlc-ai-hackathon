@@ -1,11 +1,11 @@
-from api.utils.singleton import Singleton
-from api.utils.usefull_func import hashPassword
-from api.utils.temp_data import LocalStoreg
-from api.database_handler import DataBase
-from api.utils.config import config
+from back.utils.singleton import Singleton
+from back.utils.usefull_func import hashPassword
+from back.utils.temp_data import LocalStoreg
+from back.database_handler import DataBase
+from back.utils.config import config
 
 from fastapi import Request
-from schemes import *
+from .schemes import *
 
 from inference.model_wrapper import AiAssistant
 
@@ -129,7 +129,7 @@ class Services(Singleton):
     
     def get_topics(self, items: GetTopicsRequestDTO, request: Request) -> GetTopicsResponseDTO:
         login_id = items.login_id
-        with sqlite3.connect('api/db.sqlite3') as c:
+        with sqlite3.connect(config.DATABASE_PATH) as c:
             topics = c.execute(f"""SELECT * FROM topics WHERE user_id = '{login_id}'""").fetchall()
 
         status: bool = True
@@ -137,7 +137,7 @@ class Services(Singleton):
 
     def del_topic(self, items: DelTopicRequestDTO, request: Request) -> DelTopicResponseDTO:
         topic_id = items.topic_id
-        with sqlite3.connect('api/db.sqlite3') as c:
+        with sqlite3.connect(config.DATABASE_PATH) as c:
             c.execute(f"""DELETE FROM messages WHERE topic_id = '{topic_id}'""")
             c.execute(f"""DELETE FROM topics WHERE id = '{topic_id}'""")
 
