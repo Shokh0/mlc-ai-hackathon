@@ -10,4 +10,3 @@ class Config:
     DATABASE_PATH: str = os.getcwd().replace("\\utils", "").replace("\\", "/")+"/back/db.sqlite3"
 
 config = Config()
-print(f'\n{config.DATABASE_PATH}\n')

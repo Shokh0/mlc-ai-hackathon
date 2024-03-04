@@ -60,43 +60,43 @@ async def readRedocApi() -> RedirectResponse:
 
 # POST
 @app.post('/api/lamini')
-async def lamini(question : LaminiRequestDTO):
+async def lamini(question : Schemes.LaminiRequestDTO):
     return services.get_lamini(question)
 
 @app.post('/api/newChat')
-async def getNewChat(items: NewChatDataRequestDTO, request: Request) -> JSONResponse:
+async def getNewChat(items: Schemes.NewChatDataRequestDTO, request: Request) -> JSONResponse:
     return services.get_new_chat(items, request)
 
 @app.post('/api/getUserIdAndTopicId')
-async def getUserIdAndTopicId(items: UserIdAndTopicIdDataRequestDTO, request: Request):
+async def getUserIdAndTopicId(items: Schemes.UserIdAndTopicIdDataRequestDTO, request: Request):
     return services.get_user_id_and_topic_id(items, request)
 
 @app.post('/api/singup')
-async def singup(items: SingupRequestDTO, request: Request) -> JSONResponse:
+async def singup(items: Schemes.SingupRequestDTO, request: Request) -> JSONResponse:
     return services.get_singup(items, request)
 
 @app.post('/api/login')
-async def login(items: LoginRequestDTO, request: Request) -> JSONResponse:
+async def login(items: Schemes.LoginRequestDTO, request: Request) -> JSONResponse:
     return services.get_login(items, request)
 
 @app.post('/api/addMessage')
-async def addMessage(items: AddMessagesRequestDTO, request: Request) -> JSONResponse:
+async def addMessage(items: Schemes.AddMessagesRequestDTO, request: Request) -> JSONResponse:
     return services.add_new_message(items, request)
 
 @app.post('/api/getMessage')
-async def getMessage(items: GetMessagesRequestDTO, request: Request) -> JSONResponse:
+async def getMessage(items: Schemes.GetMessagesRequestDTO, request: Request) -> JSONResponse:
     return services.get_messages(items, request)
 
 @app.post('/api/addTopic')
-async def addTopic(items: AddTopicRequestDTO, request: Request) -> JSONResponse:
+async def addTopic(items: Schemes.AddTopicRequestDTO, request: Request) -> JSONResponse:
     return services.add_topic(items, request)
 
 @app.post('/api/getTopics')
-async def getTopics(items: GetTopicsRequestDTO, request: Request) -> JSONResponse:
+async def getTopics(items: Schemes.GetTopicsRequestDTO, request: Request) -> JSONResponse:
     return services.get_topics(items, request)
 
 @app.post('/api/delTopic')
-async def delTopic(items: DelTopicRequestDTO, request: Request) -> JSONResponse:
+async def delTopic(items: Schemes.DelTopicRequestDTO, request: Request) -> JSONResponse:
     return services.del_topic(items, request)
 
 
